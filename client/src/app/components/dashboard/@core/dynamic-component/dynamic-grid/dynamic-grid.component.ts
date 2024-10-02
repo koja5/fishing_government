@@ -202,7 +202,13 @@ export class DynamicGridComponent implements CanComponentDeactivate {
 
   setPage(event) {
     console.log(event);
-    this.gridConfig.offset = event.offset;
+    if (!this.gridConfig && this.gridConfig != null) {
+      this.gridConfig.offset = event.offset;
+    } else {
+      this.gridConfig = {
+        offset: event.offset,
+      };
+    }
     this._storageService.setOffsetForGrid(
       window.location.pathname,
       event.offset
@@ -358,9 +364,9 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       if (this.gridConfig.offset) {
         this.setPage(this.gridConfig);
       }
-
-      this.filterData();
     }
+
+    this.filterData();
   }
 
   @HostListener("window:resize", ["$event"])
@@ -814,10 +820,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     if (event === "Bezirksverwaltung") {
       this.resetFbzFilter();
     } else {
-      this.searchRegionValue = {
-        id: null,
-        name: null,
-      };
+      this.resetRegionFilter();
     }
     this.filterData();
   }
@@ -844,7 +847,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       id: null,
       name: null,
     };
-    this._storageService.setFbzFilterForGrid(
+    this._storageService.setRegionFilterForGrid(
       window.location.pathname,
       this.searchRegionValue
     );
@@ -882,6 +885,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     let temp = this.tempData;
 
     if (this.config.regionFilter) {
+      this.loaderContent = true;
       this._service
         .callGetMethod(
           "api/admin/filterFsdOrgan?bh=" +
@@ -891,7 +895,6 @@ export class DynamicGridComponent implements CanComponentDeactivate {
         )
         .subscribe((data: any) => {
           temp = data;
-          this.loader = false;
 
           // Filter Our Data
           if (this.searchValue) {
@@ -917,6 +920,8 @@ export class DynamicGridComponent implements CanComponentDeactivate {
           }
 
           this.rows = temp;
+          this.loader = false;
+          this.loaderContent = false;
         });
     } else {
       let tempFilter = [];

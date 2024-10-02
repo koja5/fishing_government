@@ -95,6 +95,7 @@
         "death": "Death",
         "alive": "Alive",
         "dead": "Dead",
+        "chooseDropdownFilterOption": "Filter by Region or FBZ",
         "chooseRegionPlaceholder": "Region",
         "chooseFbzPlaceholder": "FBZ"
     },
