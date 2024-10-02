@@ -1,0 +1,84 @@
+<div *ngIf="!config?.schedule" [ngClass]="[config.width]" [formGroup]="group" class="form-group form-custom">
+    <label *ngIf="config.title" class="custom-label">{{
+        config.title | translate
+        }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' :
+            ''}}</span>
+        <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+    </label>
+    <p *ngIf="group.controls[config.name]&&group.controls[config.name].status === 'INVALID' && (group.pending || group.controls[config.name].touched)"
+        class="error must-label m-0">{{'form.mustFillThisField'
+        |
+        translate}}</p>
+    <ng-select [items]="data" [bindLabel]="config.field.text" [bindValue]="config.field.value" [closeOnSelect]="true"
+        [searchable]="!config.searchable ? true : config.searchable" [loading]=" loading"
+        class="{{ config.class }} {{group.controls[config.name].status === 'INVALID' && (group.pending || group.controls[config.name].touched) ? 'error' : ''}}"
+        [id]="config.name" [placeholder]="config.placeholder ? (config.placeholder) : ''"
+        [ignoreAccent]="config.fieldConfig?.ignoreAccent" [filterBarPlaceholder]="config.fieldConfig?.filterPlaceholder"
+        [formControlName]="config.name" [readonly]="config.readonly" [hideSelected]="config.hideSelected"
+        [clearSearchOnAdd]="config.clearSearchOnAdd" [deselectOnClick]="config.deselectOnClick"
+        [minTermLength]="config.minTermLength" (change)="onChange($event)">
+        <ng-template *ngIf="config.fieldTemplate" ng-label-tmp let-item="item" let-clear="clear">
+            <div *ngFor="let field of config.fieldTemplate.fields">
+                <span *ngFor="let value of field.values"><span *ngIf="value === ''">&nbsp;</span><span
+                        *ngIf="value != ''">{{item[value] | translate}}</span></span>
+            </div>
+        </ng-template>
+        <ng-template *ngIf="config.fieldTemplate" ng-value-tmp let-item="item">
+            <div *ngFor="let field of config.fieldTemplate.fields">
+                <span *ngFor="let value of field.values"><span *ngIf="value === ''">&nbsp;</span><span
+                        *ngIf="value != ''">{{item[value] | translate}}</span></span>
+            </div>
+        </ng-template>
+        <ng-template *ngIf="config.fieldTemplate" ng-option-tmp let-item="item">
+            <div *ngFor="let field of config.fieldTemplate.fields">
+                <span *ngFor="let value of field.values"><span *ngIf="value === ''">&nbsp;</span><span
+                        *ngIf="value != ''">{{item[value] | translate}}</span></span>
+            </div>
+        </ng-template>
+        <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+            <div class="ng-option disabled">
+                {{'commonFields.noDataFoundFor' | translate}}
+                "{{searchTerm}}". {{'commonFields.doYouWantToCreateNew' |
+                translate}}
+            </div>
+        </ng-template>
+
+        <ng-template *ngIf="config.addTag" ng-footer-tmp>
+            <p class="m-0 font-weight-bold cursor-pointer" (click)="openModalNewEntrie()"><span
+                    class="fa fa-plus-circle"></span> {{
+                config.addTag.title ? config.addTag.title : 'commonFields.createNew' | translate
+                }} </p>
+        </ng-template>
+    </ng-select>
+</div>
+
+<!-- Dialog -->
+<ng-template #modalForm let-modal class="modal-dialog modal-lg modal-dialog-centered display-none">
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">{{'general.newEntrie' | translate}}</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <app-dynamic-forms *ngIf="configForm.config && configForm.config.length > 0" [config]="configForm"
+            [partOfGrid]="true" [data]="data" (submit)="submitEmitter($event)" #form="dynamicForm">
+        </app-dynamic-forms>
+    </div>
+</ng-template>
+
+<ng-template #modalNewEntrie let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">{{title ? title : 'generalDialog.areYouSure' | translate}}</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <app-dynamic-forms [path]="config.addTag.formConfig.path" [file]="config.addTag.formConfig.file"
+            (submit)="submitNewEntriesEmitter($event)" #form="dynamicForm">
+        </app-dynamic-forms>
+    </div>
+</ng-template>
+
+<!--/ Dialog -->

@@ -1,0 +1,16 @@
+<div [ngClass]="[config.width]" [formGroup]="group" class="form-group form-custom {{config.hide ? 'hide' : ''}}">
+    <label *ngIf="config.title" class="custom-label">{{ config.title | translate
+        }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' :
+            ''}}</span>
+        <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+    </label>
+    <p *ngIf="group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched)"
+        class="error must-label m-0">{{'form.mustFillThisField'
+        |
+        translate}}</p>
+    <ejs-datepicker cssClass="e-outline"
+        class="{{ config.class }} {{group.controls[config.name].status === 'INVALID' && (group.pending || group.controls[config.name].touched) ? 'error' : ''}}"
+        [id]="config.name" [formControlName]="config.name" [readonly]="config.readonly!"
+        [format]="config.format"></ejs-datepicker>
+
+</div>

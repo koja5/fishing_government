@@ -1,0 +1,249 @@
+{
+    "general": {
+        "save": "Save",
+        "searchFilter": "Search",
+        "addNew": "Add new",
+        "show": "Show",
+        "entries": "entries",
+        "newEntrie": "New entrie",
+        "editEntrie": "Edit entrie",
+        "edit": "Edit",
+        "delete": "Delete",
+        "update": "Update",
+        "setUp": "Set up",
+        "connected": "Connected",
+        "cancel": "Cancel",
+        "active": "Active",
+        "inactive": "Inactive",
+        "total": "total",
+        "options": "Options",
+        "noInformation": "No information",
+        "ok": "OK",
+        "noData": "There is no information to display",
+        "pleaseSelectValueFirst": "Please select the value from the drop-down list to get the results.",
+        "here": "here",
+        "discardChangesTitle": "Discard changes?",
+        "discardChangesText": "You have unsaved changes. Are you sure you want to discard them?",
+        "discardChangesConfirm": "Discard changes",
+        "discardChangesCancel": "Cancel"
+    },
+    "action": {
+        "completeReport": "Complete report",
+        "backReportToOwner": "Back report to owner",
+        "noHaveEntry": "No have entry",
+        "reminderOwnerToCompleteReport": "Remiminder owner to complete report",
+        "requestAdminToChangeStatus": "Request for additional changes"
+    },
+    "actionMessage": {
+        "successExecuteActionTitleDefault": "Successfuly changed!",
+        "successExecuteActionTextDefault": "Action is successfully executed!",
+        "errorExecuteActionTitleDefault": "Something is happened",
+        "errorExecuteActionTextDefault": "Please check again or try later",
+        "errorUpdateTermineOnGoogleCalendarRights": "Problem with rights when updating an appointment on the google calendar.",
+        "actionNotAllowed": "Action not allowed",
+        "dialogCompleteReportQuestionTitle": "Are you sure?",
+        "dialogCompleteReportQuestionText": "Do you want to complete the report. Know that once you complete it, you cannot change the data afterwards.",
+        "reportCompletedNotYet": "The report is still under construction. You have not completed it.",
+        "reportCompleted": "This report is complited! Report completed at",
+        "dialogBackReportToOwnerTitle": "Are you sure?",
+        "dialogBackReportToOwnerText": "Do you want to back report to owner. If you back, owner than can change current report.",
+        "dialogReminderOwnerToCompleteReportTitle": "Are you sure?",
+        "dialogReminderOwnerToCompleteReportText": "Do you want to send notification via email to owner like reminder to complete report?",
+        "dialogRequestForAdditionalChangesTitle": "Are you sure?",
+        "dialogRequestForAdditionalChangesText": "Do you want to send request to superadmin to allow you to make additional changes?",
+        "dialogNoHaveReportsTitle": "Are you sure",
+        "dialogNoHaveReportsText": "Do you want to send  empty report? If you current have some entries this entries will be deleted!",
+        "exportToPng": "Export to PNG",
+        "exportToCsv": "Export to CSV",
+        "goBack": "Go back",
+        "valueNeedToBeLess": "This value must be less than or equal to the previous value",
+        "dialogGenerateNewPasswordTitle": "Are you sure?",
+        "dialogGenerateNewPasswordText": "Do you want to generate new password for this user? New password will be send on user email.",
+        "dialogGenerateNewPasswordYes": "Yes, generate new password",
+        "dialogGenerateNewPasswordNo": "No"
+    },
+    "commonFields": {
+        "name": "Name",
+        "firstname": "Firstname",
+        "lastname": "Lastname",
+        "gender": "Gender",
+        "birthday": "Birthday",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "rePassword": "Re-password",
+        "telephone": "Telephone",
+        "address": "Address",
+        "active": "Active",
+        "deactive": "Deactive",
+        "action": "Action",
+        "street": "Street",
+        "location": "Location",
+        "biography": "Biography",
+        "oldPassword": "Old password",
+        "newPassword": "New password",
+        "confirmNewPassword": "Confirm new password",
+        "fillRequredFields": "Please fill required fields",
+        "createNew": "Create new",
+        "noDataFoundFor": "No data found for",
+        "doYouWantToCreateNew": "Do you want to create new?",
+        "date": "Date",
+        "status": "Status",
+        "preview": "Preview",
+        "generateNewPassword": "Generate new password",
+        "locked": "Locked",
+        "death": "Death",
+        "alive": "Alive",
+        "dead": "Dead",
+        "chooseDropdownFilterOption": "Filter by Region or FBZ",
+        "chooseRegionPlaceholder": "Region",
+        "chooseFbzPlaceholder": "FBZ"
+    },
+    "userTypes": {
+        "superadmin": "Superadmin",
+        "admin": "Admin",
+        "partner": "Partner",
+        "employee": "Employee"
+    },
+    "status": {
+        "empty": "Empty",
+        "default": "Starting with request",
+        "completed": "Completed report"
+    },
+    "login": {
+        "title": "Welcome to Fischereiverband! 👋",
+        "subtitle": "Please sign-in to your account and start the adventure",
+        "email": "Email",
+        "emailIsRequired": "Email is required",
+        "emailMustBeValid": "Email must be a valid email address",
+        "password": "Password",
+        "forgotPassword": "Forgot Password?",
+        "passwordIsRequired": "Password is required",
+        "rememberMe": "Remember Me",
+        "signIn": "Sign in",
+        "newOnPlatform": "New on our platform?",
+        "createAnAccount": "Create an account",
+        "verifiedError": "You need to verified your email address!",
+        "activeError": "Your account is not active!",
+        "notExistsError": "Account does not exist!",
+        "or": "or",
+        "signInWithGoogle": "Sign in with Google",
+        "signInWithMicrosoft": "Sign in with Microsoft"
+    },
+    "forgot": {
+        "title": "Forgot Password? 🔒",
+        "text": "Enter your email and we'll send you instructions to reset your password",
+        "sendResetLink": "Send reset link",
+        "sendLinkForResetOnMail": "Send link for reset password to this mail address",
+        "mailNotExists": "Mail not exists! Please check with other email address!"
+    },
+    "resetPassword": {
+        "title": "Reset Password 🔒",
+        "text": "You can change your old password in the following form.",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "passwordNotMatch": "The passwords do not match, please enter the same password in both fields!",
+        "setNewPassword": "Set New Password",
+        "changedPasswordSuccessfuly": "Changed password successfuly. Now you can login!",
+        "oldPasswordIsWrong": "Old password is wrong. Please enter correct password",
+        "oldAndNewPasswordCannotBeSame": "Old and new password cannot be same",
+        "passwordsNeedToBeSame": "New and re-password need to be same!",
+        "successfulyChangedPassword": "Successfully changed your password"
+    },
+    "navigations": {
+        "allUsers": "All users",
+        "allFsdOrgans": "All inspectors"
+    },
+    "navBar": {
+        "profile": "Profile",
+        "logout": "Logout"
+    },
+    "generalDialog": {
+        "areYouSure": "Are you sure?",
+        "deleteQuestion": "If you perform this action, lost data cannot be recovered!",
+        "yes": "Yes, I want",
+        "no": "No"
+    },
+    "form": {
+        "mustFillThisField": "Please fill this field!",
+        "fieldIsRequired": "Data is required",
+        "emailIsRequired": "Email is required",
+        "emailMustBeValid": "Email must be a valid email address",
+        "passwordIsRequired": "Password is required"
+    },
+    "accountSettings": {
+        "title": "Account settings",
+        "general": "General",
+        "changePassword": "Change password"
+    },
+    "settings": {
+        "worktime": "Worktime",
+        "connections": "Connections",
+        "customization": "Customization",
+        "recommended": "Recommended",
+        "personalize": "Personalize"
+    },
+    "adminSettings": {
+        "adminSettings": "Admin settings",
+        "onlinePayment": "Online payment",
+        "bookingSettings": "Booking online",
+        "reminders": "Reminders",
+        "license": "License",
+        "holidays": "Holidays"
+    },
+    "authGlobal": {
+        "backToLogin": "Back to login"
+    },
+    "verifiedMail": {
+        "title": "Mail is verified! 🙌",
+        "text": "Thank you for your signup and verified your mail. Now you can login and configurable your account!",
+        "goToLogin": "Login now"
+    },
+    "somethingHappenedPage": {
+        "title": "Something unexpected happened! 🤔",
+        "text": "There was an error in the previous action. Please try again or contact our support for help.",
+        "backToHome": "Back to Home"
+    },
+    "uploader": {
+        "dragAndDrop": "Drag and drop file here",
+        "or": "or",
+        "browseForFile": "Browse for file",
+        "savedFiles": "Saved files",
+        "noDocumentsAdded": "No documents added"
+    },
+    "fsdOrgan": {
+        "title": "Information",
+        "titel": "Titel",
+        "nachname": "Nachname",
+        "vorname": "Vorname",
+        "adresszusatz": "Adresszusatz",
+        "strabe": "Strabe",
+        "ort": "Ort",
+        "geburtsdatum": "Geburtsdatum",
+        "telefonnummer": "Telefonnummer",
+        "telefonnummer2": "Telefonnummer2",
+        "mobil": "Mobil",
+        "email": "Email",
+        "sperre": "Sperre",
+        "todesfall": "Todesfall"
+    },
+    "fortbildungstermine": {
+        "title": "Fortbildungstermine",
+        "fortbilfdungstermin": "Fortbilfdungstermin",
+        "FSDFBOrt": "FSDFBOrt",
+        "Teilnahme": "Teilnahme",
+        "active": "Active",
+        "inactive": "Inactive"
+    },
+    "bestellungen": {
+        "title": "Bestellungen",
+        "bescheidDatum": "Bescheid-Datum",
+        "zahl": "Zahl",
+        "bh": "BH",
+        "fbz": "FBZ",
+        "bezirk": "Bezirk",
+        "dienstnummer": "Dienstnummer",
+        "abzeichennummer": "Abzeichennummer",
+        "bestelltSeit": "Bestellt seit"
+    }
+}

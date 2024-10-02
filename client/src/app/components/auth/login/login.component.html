@@ -1,0 +1,122 @@
+<body>
+    <div class="login-root">
+        <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+            <div class="loginbackground box-background--white padding-top--64">
+                <div class="loginbackground-gridContainer">
+                    <div class="box-root flex-flex" style="grid-area: top / start / 8 / end;">
+                        <div class="box-root"
+                            style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5;">
+                        <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2;">
+                        <div class="box-root box-background--blue800" style="flex-grow: 1;"></div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4;">
+                        <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1;"></div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6;">
+                        <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end;">
+                        <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end;">
+                        <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1;"></div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20;">
+                        <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17;">
+                        <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+                <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+                    <h1><a href="http://blog.stackfindover.com/" rel="dofollow">{{ coreConfig.app.appName }}</a></h1>
+                </div>
+                <div class="formbg-outer">
+                    <div class="formbg">
+                        <div class="formbg-inner padding-horizontal--48">
+                            <span class="padding-bottom--15">{{'login.title' | translate}}</span>
+                            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                <div class="field padding-bottom--24">
+                                    <label for="email">{{'login.email' | translate}}</label>
+                                    <input type="email" formControlName="email" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                                        placeholder="admin@demo.com" aria-describedby="login-email" autofocus=""
+                                        tabindex="1">
+                                </div>
+                                <div class="field padding-bottom--24">
+                                    <div class="grid--50-50">
+                                        <label for="password">{{'commonFields.password' | translate}}</label>
+                                        <div class="reset-pass">
+                                            <a routerLink="/auth/forgot-password">{{'login.forgotPassword' |
+                                                translate}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="input-group input-group-merge form-password-toggle">
+                                        <input [type]="passwordTextType ? 'text' : 'password'"
+                                            formControlName="password" class="form-control form-control-merge"
+                                            [ngClass]="{ 'is-invalid error': submitted && f.password.errors }"
+                                            placeholder="············" aria-describedby="login-password" tabindex="2">
+                                        <div class="input-group-append show-hide-password">
+                                            <span class="input-group-text cursor-pointer"><i
+                                                    class="feather font-small-4" [ngClass]="{
+                                                'icon-eye-off': passwordTextType,
+                                                'icon-eye': !passwordTextType
+                                              }" (click)="togglePasswordTextType()"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
+                                    <label for="checkbox">
+                                        <input type="checkbox" name="checkbox"> Stay signed in for a week
+                                    </label>
+                                </div> -->
+                                <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+                                    <div class="alert-body">
+                                        <p *ngIf="error === 'verified'">{{ 'login.verifiedError' | translate }}</p>
+                                        <p *ngIf="error === 'active'">{{ 'login.activeError' | translate }}</p>
+                                        <p *ngIf="error === 'exist'">{{ 'login.notExistsError' | translate }}</p>
+                                    </div>
+                                </ngb-alert>
+                                <div class="field padding-bottom--24">
+                                    <input type="submit" name="submit" value="{{'login.signIn' | translate}}">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="footer-link padding-top--24">
+                        <!-- <span>{{'login.newOnPlatform' | translate}} <a href="">{{'login.createAnAccount' |
+                                translate}}</a></span> -->
+                        <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
+                            <span><a href="#">© {{ coreConfig.app.appName }}</a></span>
+                            <span><a href="#">Contact</a></span>
+                            <span><a href="#">Privacy & terms</a></span>
+                        </div>
+                    </div>
+                    <div class="developed-by">
+                        <p _ngcontent-ng-c306065023="" _ngcontent-lqt-c6="" class="mb-lg-0 mb-md-0 white-color">
+                            Made with <svg _ngcontent-ng-c306065023="" _ngcontent-lqt-c6="" aria-hidden="true"
+                                focusable="false" data-prefix="fas" data-icon="heart" role="img"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="14"
+                                class="svg-inline--fa fa-heart fa-w-16">
+                                <path _ngcontent-ng-c306065023="" _ngcontent-lqt-c6="" fill="currentColor"
+                                    d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z">
+                                </path>
+                            </svg> from <a href="https://bcigmbh.com" target="_blank">BCI GmbH</a>. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

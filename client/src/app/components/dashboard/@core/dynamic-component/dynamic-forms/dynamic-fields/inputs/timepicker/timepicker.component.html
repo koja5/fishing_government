@@ -1,0 +1,24 @@
+<div *ngIf="config.schedule === undefined" [ngClass]="[config.width]" [formGroup]="group"
+    class="form-group form-custom">
+    <label *ngIf="config.title" class="custom-label">{{ config.title | translate
+        }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' :
+            ''}}</span>
+        <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+    </label>
+    <p *ngIf="group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched)"
+        class="error must-label m-0">{{'form.mustFillThisField'
+        |
+        translate}}</p>
+    <ngb-timepicker
+        class="{{ config.class }} {{group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched) ? 'is-invalid' : ''}}"
+        [id]="config.name" [formControlName]="config.name" [disabled]="config.disabled!" [readonly]="config.readonly!"
+        [format]="config.format" [meridian]="meridian ? meridian : false" [disabled]="disabled"
+        [minuteStep]="30"></ngb-timepicker>
+</div>
+
+<div *ngIf="config?.schedule" class="{{ config?.width }}">
+    <label *ngIf="config?.title" class="custom-label">{{ config?.title | translate
+        }}</label>
+    <div class="e-input-group e-control-wrapper e-outline e-ddl e-valid-input">
+    </div>
+</div>

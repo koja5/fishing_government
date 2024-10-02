@@ -1,0 +1,70 @@
+<app-loader *ngIf="loader"></app-loader>
+
+<div *ngIf="!loader">
+
+    <div class="col-md-12">
+        <app-go-back></app-go-back>
+    </div>
+
+    <div class="col-md-12 owner text-center mb-1">
+        <h3><b>{{fsdOrgan.nachname}}
+                {{fsdOrgan.vorname}}</b></h3>
+    </div>
+
+    <div class="card col-12">
+        <label>{{'fsdOrgan.title' | translate}}</label>
+        <app-dynamic-forms *ngIf="_helpService.isObjectEmpty(fsdOrgan)" [path]="'forms/admin'" [file]="'fsd-organ.json'"
+            [data]="fsdOrgan" [hideActionButtons]="true">
+        </app-dynamic-forms>
+    </div>
+    <div class="card col-12">
+        <label>{{'fortbildungstermine.title' | translate}}</label>
+        <div *ngIf="fortbildungstermine && _helpService.isObjectEmpty(fortbildungstermine)" class="row p-2">
+            <div class="col-lg-4">
+                <div class="details">
+                    <div class="icon">
+                        <span class="fa fa-calendar"></span>
+                    </div>
+                    <div class="data">
+                        <h3>{{fortbildungstermine.fortbilfdungstermin | date: 'dd.MM.yyyy'}}</h3>
+                        <h6>{{'fortbildungstermine.fortbilfdungstermin' | translate}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="details">
+                    <div class="icon">
+                        <span class="fa fa-map-marker"></span>
+                    </div>
+                    <div class="data">
+                        <h3>{{fortbildungstermine.fsdfb_ort}}</h3>
+                        <h6>{{'fortbildungstermine.FSDFBOrt' | translate}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="details">
+                    <div class="icon">
+                        <span class="fa fa-info-circle"></span>
+                    </div>
+                    <div class="data">
+                        <h3
+                            class="status badge {{fortbildungstermine.teilnahme ? 'badge-light-success' : 'badge-light-danger'}}">
+                            {{fortbildungstermine.teilnahme ? ('fortbildungstermine.active' | translate) :
+                            ('fortbildungstermine.inactive' | translate)}}</h3>
+                        <h6>{{'fortbildungstermine.Teilnahme' | translate}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!fortbildungstermine || !_helpService.isObjectEmpty(fortbildungstermine) && !loader">
+            <app-no-data-content></app-no-data-content>
+        </div>
+    </div>
+
+    <div class="card col-12">
+        <label>{{'bestellungen.title' | translate}}</label>
+        <app-dynamic-grid *ngIf="allBestellungen" #grid [path]="path" [file]="file" [data]="allBestellungen"
+            [height]="'auto'"></app-dynamic-grid>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div *ngIf="data" [ngClass]="[config.width]" [formGroup]="group" class="form-group form-custom">
+  <label *ngIf="config?.title" class="custom-label">{{config.title | translate
+    }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' : ''}}</span>
+    <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+  </label>
+  <p *ngIf="group&&group.controls[config.name] && (group.pending || group.controls[config.name].touched)"
+    class="error must-label m-0">{{'form.mustFillThisField'
+    |
+    translate}}</p>
+  <ng-select [items]="data" [bindLabel]="config.field.text" [bindValue]="config.field.value" [multiple]="true"
+    [closeOnSelect]="config.closeOnSelect" [searchable]="!config.searchable ? true : config.searchable"
+    [loading]="loading"
+    class="{{ config.class }} {{group.controls[config.name].status === 'INVALID' && (group.pending || group.controls[config.name].touched) ? 'error' : ''}}"
+    [id]="config.name" [placeholder]="config.placeholder ? (config.placeholder) : ''"
+    [ignoreAccent]="config.fieldConfig?.ignoreAccent" [filterBarPlaceholder]="config.fieldConfig?.filterPlaceholder"
+    [formControlName]="config.name" [readonly]="config.readonly" [hideSelected]="config.hideSelected"
+    [clearSearchOnAdd]="config.clearSearchOnAdd" [deselectOnClick]="config.deselectOnClick"
+    [minTermLength]="config.minTermLength">
+    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+      <span *ngIf="!config.complexField" class="ng-value-label"> {{ item[config.field.text] }}</span>
+      <span *ngIf="config.complexField" class="ng-value-label"> <span *ngFor="let field of config.complexField">{{
+          item[field] }}</span>
+      </span>
+      <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+    </ng-template>
+    <ng-template *ngIf="config.addTag" ng-footer-tmp>
+      <p class="m-0 font-weight-bold cursor-pointer" (click)="createNew()">{{
+        config.addTag.text | translate
+        }} </p>
+    </ng-template>
+  </ng-select>
+
+</div>

@@ -1,0 +1,82 @@
+{
+    "request": {
+        "type": "GET",
+        "api": "/api/getMyProfile",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "firstname",
+            "title": "commonFields.firstname",
+            "field": "firstname",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "lastname",
+            "title": "commonFields.lastname",
+            "field": "lastname",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "street",
+            "title": "commonFields.street",
+            "field": "street"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "location",
+            "title": "commonFields.location",
+            "field": "location"
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "birthday",
+            "title": "commonFields.birthday",
+            "field": "birthday"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "email",
+            "title": "commonFields.email",
+            "field": "email",
+            "readonly": true,
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "username",
+            "title": "commonFields.username",
+            "field": "username",
+            "required": true
+        },
+        {
+            "type": "button",
+            "response": "toastr",
+            "width": "col-md-12",
+            "class": "btn btn-primary",
+            "name": "submit",
+            "title": "general.save",
+            "field": "submitAndPay",
+            "positionClass": "text-right mt-3 col-md-12"
+        }
+    ]
+}

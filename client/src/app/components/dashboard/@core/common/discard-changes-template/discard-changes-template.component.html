@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">{{'general.discardChangesTitle' | translate}}</h5>
+    <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" tabindex="0" ngbAutofocus>
+    {{'general.discardChangesText' | translate}}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="confirmAction()" rippleEffect>
+        {{'general.discardChangesConfirm' | translate}}
+    </button>
+    <button type="button" class="btn btn-default" (click)="cancelAction()" rippleEffect>
+        {{'general.discardChangesCancel' | translate}}
+    </button>
+</div>

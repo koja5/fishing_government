@@ -1,0 +1,45 @@
+<div *ngIf="config.schedule === undefined" [ngClass]="[config.width]" [formGroup]="group" class="form-group form-custom">
+  <label *ngIf="config?.title" class="custom-label">{{config.title | translate
+    }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' : ''}}</span>
+    <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark></label>
+  <p *ngIf="group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched)"
+    class="error must-label m-0">{{'form.mustFillThisField' |
+    translate}}</p>
+  <input *ngIf="!config.subType" type="number" #default
+    class="form-control {{ config.class }} {{group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched) ? 'is-invalid' : ''}}"
+    [id]="config.name" [placeholder]="config.placeholder ? config.placeholder : ''" [formControlName]="config.name"
+    [readonly]="config.readonly" [disabled]="config.disabled!" [min]="config.min" [max]="config.max">
+  <div class="input-group" *ngIf="config.subType === 'group'">
+    <div class="input-group-prepend" *ngIf="config.groupSettings.groupPosition === 'left'">
+      <span class="input-group-text" id="basic-addon2">{{config.groupSettings.groupText | translate}}</span>
+    </div>
+    <input type="number" #default
+      class="form-control {{ config.class }} {{group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched) ? 'is-invalid' : ''}}"
+      [id]="config.name" [name]="config.name" [placeholder]="config.placeholder ? config.placeholder : ''"
+      [formControlName]="config.name" [readonly]="config.readonly" [disabled]="config.disabled!"
+      [multiline]="config.multiline" [min]="config.min" [max]="config.max" />
+    <div class="input-group-append" *ngIf="config.groupSettings.groupPosition === 'right'">
+      <span class="input-group-text" id="basic-addon2">{{config.groupSettings.groupText | translate}}</span>
+    </div>
+  </div>
+
+  <div *ngIf="config.schedule" [ngClass]="[config?.width]" [formGroup]="group">
+    <label *ngIf="config?.title" class="custom-label">{{config.title | translate
+      }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' :
+        ''}}</span>
+      <app-explanation-mark *ngIf="config.explanation"
+        [explanation]="config.explanation"></app-explanation-mark></label>
+    <p *ngIf="group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched)"
+      class="error must-label m-0">{{'form.mustFillThisField' |
+      translate}}</p>
+    <div class="e-input-group e-control-wrapper e-outline">
+      <input *ngIf="!config?.multiline" class="{{
+        config?.class
+      }} e-field e-input e-control e-textbox e-lib e-input " value="" name="{{ config?.name }}"
+        type="{{ config?.type }}" [min]="config.min" [max]="config.max" />
+      <textarea *ngIf="config?.multiline" class="{{
+        config?.class
+      }} e-field e-input e-control e-textbox e-lib e-input  border-none" value="" name="{{ config?.name }}"
+        [min]="config.min" [max]="config.max"></textarea>
+    </div>
+  </div>

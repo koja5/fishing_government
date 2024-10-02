@@ -1,0 +1,5 @@
+
+<app-loader *ngIf="loader"></app-loader>
+
+<app-dynamic-grid *ngIf="!loader" #grid [path]="path" [file]="file" [data]="data"
+    [modalDialogSize]="'modal-dialog-large'"></app-dynamic-grid>

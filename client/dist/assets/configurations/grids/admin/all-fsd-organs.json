@@ -1,0 +1,131 @@
+{
+    "pageSize": 10,
+    "request": {
+        "type": "GET",
+        "api": "/api/admin/getAllFsdOrgans",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "paging": {
+        "enable": true,
+        "settings": {
+            "pageSizes": true,
+            "pageSize": 20
+        }
+    },
+    "sorting": {
+        "enable": true
+    },
+    "grouping": {
+        "enable": true,
+        "group": []
+    },
+    "filtering": {
+        "enable": true,
+        "settings": {
+            "type": "Menu"
+        }
+    },
+    "formDialog": {
+        "type": "sidebar",
+        "closeAfterExecute": false,
+        "size": "lg"
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "hideCreateNew": true,
+    "regionFilter": true,
+    "editSettings": {
+        "allowEditing": true,
+        "allowAdding": false,
+        "allowDeleting": true,
+        "showDeleteConfirmDialog": true,
+        "mode": "Dialog"
+    },
+    "disableCreateNewRow": true,
+    "editSettingsRequest": {
+        "add": {
+            "type": "POST",
+            "api": "/api/admin/setUser",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        }
+    },
+    "columns": [
+        {
+            "title": "",
+            "flexGrow": 1,
+            "template": {
+                "type": "action",
+                "actionMode": {
+                    "type": "button",
+                    "icon": "eye",
+                    "routerLink": {
+                        "link": "/dashboard/admin/fsd-organ-details",
+                        "parameters": [
+                            "fsd_id"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "title": "commonFields.firstname",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "nachname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.lastname",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "vorname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.email",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "email",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.birthday",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "date",
+            "format": "dd.MM.yyyy",
+            "class": "text-align-right",
+            "field": "geburtsdatum",
+            "validation": {
+                "required": true
+            }
+        }
+    ],
+    "config": []
+}

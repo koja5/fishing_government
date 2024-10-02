@@ -1,0 +1,19 @@
+{
+  "type": "vertical",
+  "contentHeader": {
+    "headerTitle": "accountSettings.title",
+    "actionButton": false
+  },
+  "navigations": [
+    {
+      "title": "accountSettings.general",
+      "link": "/dashboard/settings/profile",
+      "icon": "briefcase"
+    },
+    {
+      "title": "accountSettings.changePassword",
+      "link": "/dashboard/settings/change-password",
+      "icon": "briefcase"
+    }
+  ]
+}

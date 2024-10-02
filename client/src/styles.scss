@@ -1,0 +1,163 @@
+@import "@core/scss/core.scss";
+@import "./assets/scss/styles";
+
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-lists/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-calendars/styles/material.css";
+
+:root {
+  --primary: #002984;
+  --primary-light: #3678a5;
+}
+
+.form-custom {
+  display: inline-block;
+}
+
+.form-control[readonly] {
+  background: none !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+// .display-contents {
+//   display: contents;
+// }
+
+// LOADER
+
+.loading-logo img {
+  width: 77px !important;
+}
+
+#loading-bg {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: block;
+  position: absolute;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.loading-logo {
+  position: absolute;
+  left: calc(50% - 45px);
+  top: 40%;
+}
+
+.loading {
+  position: absolute;
+  left: calc(50% - 35px);
+  top: 50%;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 3px solid transparent;
+}
+
+.loading .effect-1,
+.loading .effect-2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-left: 3px solid $primary;
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.loading .effect-1 {
+  animation: rotate 1s ease infinite;
+}
+
+.loading .effect-2 {
+  animation: rotateOpacity 1s ease infinite 0.1s;
+}
+
+.loading .effect-3 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-left: 3px solid $primary;
+  -webkit-animation: rotateOpacity 1s ease infinite 0.2s;
+  animation: rotateOpacity 1s ease infinite 0.2s;
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.loading .effects {
+  transition: all 0.3s ease;
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes rotateOpacity {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 0.1;
+  }
+
+  100% {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+    opacity: 1;
+  }
+}
+
+// END LOADER
+
+.e-input-focus {
+  border: 1px solid var(--primary) !important;
+  box-shadow: none !important;
+}
+
+.e-outline.e-input-group[_ngcontent-dmm-c88]:hover:not(.e-input-focus):not(
+    .e-success
+  ):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-outline.e-input-group.e-control-wrapper[_ngcontent-dmm-c88]:hover:not(
+    .e-input-focus
+  ):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-outline.e-float-input.e-control-wrapper[_ngcontent-dmm-c88]:hover:not(
+    .e-input-focus
+  ):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-outline.e-input-group.e-float-icon-left[_ngcontent-dmm-c88]:hover:not(
+    .e-input-focus
+  ):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-outline.e-input-group.e-control-wrapper.e-float-icon-left[_ngcontent-dmm-c88]:hover:not(
+    .e-input-focus
+  ):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-outline.e-float-input.e-float-icon-left[_ngcontent-dmm-c88]:hover:not(
+    .e-input-focus
+  ):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-outline.e-float-input.e-control-wrapper.e-float-icon-left[_ngcontent-dmm-c88]:not(
+    .e-input-focus
+  ):hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-outline.e-float-input[_ngcontent-dmm-c88]:hover:not(.e-input-focus):not(
+    .e-input-group
+  ):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) {
+  border-color: 1px solid #d8d6de !important;
+}

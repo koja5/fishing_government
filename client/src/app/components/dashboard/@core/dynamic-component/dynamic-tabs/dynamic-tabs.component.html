@@ -1,0 +1,55 @@
+<div class="content-wrapper container-xxl p-0" *ngIf="config">
+    <div class="content-body">
+        <!-- content-header component -->
+        <app-content-header [contentHeader]="config.contentHeader"></app-content-header>
+
+        <section *ngIf="config.type && config.type === 'vertical'">
+            <div class="row d-flex">
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <ul ngbNav #navVertical="ngbNav" class="nav nav-pills flex-column nav-left">
+                        <li class="nav-item" ngbNavItem>
+                            <a *ngFor="let item of config.navigations" class="nav-link d-flex py-75"
+                                routerLinkActive="active" routerLink="{{item.link}}">
+                                <i [data-feather]="item.icon" class="font-medium-3 mr-1"></i>
+                                <span class="font-weight-bold">{{item.title | translate}}</span>
+                            </a>
+
+                            <ng-template ngbNavContent>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <router-outlet></router-outlet>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                    </ul>
+                </div>
+                <div [ngbNavOutlet]="navVertical" class="col-12 col-md-9"></div>
+            </div>
+        </section>
+
+        <section *ngIf="config.type && config.type === 'horizontal'">
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-pills mb-2">
+                            <!-- account -->
+                            <li *ngFor="let item of config.navigations" class="nav-item">
+                                <a class="nav-link" routerLinkActive="active" routerLink="{{item.link}}">
+                                    <i [data-feather]="item.icon" class="font-medium-3 me-50"></i>
+                                    <span class="fw-bold">{{item.title | translate}}</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- profile -->
+                        <div class="card">
+                            <router-outlet></router-outlet>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div [ngClass]="[config.width]" [formGroup]="group" class="form-group form-custom {{config.hide ? 'hide' : ''}}">
+  <label *ngIf="config.title" class="custom-label">{{config.title | translate
+    }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' : ''}}</span>
+    <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+  </label>
+  <p *ngIf="group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched)"
+    class="error must-label m-0">{{'form.mustFillThisField' |
+    translate}}</p>
+
+  <!-- SIMPLE -->
+  <div *ngIf="!config.subType">
+    <input *ngIf="!config.multiline" [type]="config.type" #default
+      class="form-control {{ config.class }} {{group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched) ? 'is-invalid' : ''}}"
+      [id]="config.name" [name]="config.name" [placeholder]="config.placeholder ? (config.placeholder | translate) : ''"
+      [formControlName]="config.name" [readonly]="config.readonly" [disabled]="config.disabled!"
+      [multiline]="config.multiline" />
+    <textarea *ngIf="config.multiline" type="text" #default
+      class="form-control {{group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched) ? 'is-invalid' : ''}}"
+      [id]="config.name" [placeholder]="config.placeholder ? (config.placeholder | translate) : ''"
+      [formControlName]="config.name" [readonly]="config.readonly" [disabled]="config.disabled!" [rows]="config.rows"
+      [cols]="config.cols"></textarea>
+  </div>
+  <!--/ SIMPLE -->
+
+  <!-- GROUP -->
+  <div class="input-group" *ngIf="config.subType === 'group'">
+    <div class="input-group-prepend" *ngIf="config.groupSettings.groupPosition === 'left'">
+      <span class="input-group-text" id="basic-addon2">{{config.groupSettings.groupText | translate}}</span>
+    </div>
+    <input [type]="config.type" #default
+      class="form-control {{ config.class }} {{group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched) ? 'is-invalid' : ''}}"
+      [id]="config.name" [name]="config.name" [placeholder]="config.placeholder ? (config.placeholder | translate) : ''"
+      [formControlName]="config.name" [readonly]="config.readonly" [disabled]="config.disabled!"
+      [multiline]="config.multiline" />
+    <div class="input-group-append" *ngIf="config.groupSettings.groupPosition === 'right'">
+      <span class="input-group-text" id="basic-addon2">{{config.groupSettings.groupText | translate}}</span>
+    </div>
+    <a *ngIf="config.groupSettings.additionalValue === 'external-link'" class="external-link"
+      href="{{config.groupSettings.groupText | translate}}{{group.controls[config.field].value}}" target="_blank"><span
+        class="fa fa-external-link"></span></a>
+  </div>
+  <!-- / GROUP -->
+
+</div>

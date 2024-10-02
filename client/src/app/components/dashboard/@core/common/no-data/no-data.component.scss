@@ -1,0 +1,23 @@
+@media (min-width: 993px) {
+  .no-data {
+    height: calc(100vh - 45vh) !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .no-data {
+    height: calc(100vh - 50vh) !important;
+  }
+}
+
+.no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.no-data-img {
+  width: 180px;
+  margin-bottom: 20px;
+}

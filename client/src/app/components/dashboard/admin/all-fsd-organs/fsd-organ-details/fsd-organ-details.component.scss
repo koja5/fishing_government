@@ -1,0 +1,46 @@
+.details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.details h3 {
+  margin: 0;
+}
+
+.details h6 {
+    font-size: 12px;
+}
+
+.card label {
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.icon .fa {
+  font-size: 28px;
+}
+
+.icon .fa-calendar {
+  color: #79b122;
+}
+
+.icon .fa-map-marker {
+  color: red;
+}
+
+.icon .fa-info-circle {
+  color: #6f6fff;
+}
+
+.details .data {
+  text-align: center;
+}
+
+.status {
+    font-size: large !important;
+}

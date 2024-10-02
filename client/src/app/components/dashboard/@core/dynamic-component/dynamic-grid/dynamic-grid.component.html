@@ -1,0 +1,447 @@
+<app-loader *ngIf="loader"></app-loader>
+<div class="content-wrapper p-0" *ngIf="config&&!loader">
+    <div class="content-body">
+        <!-- User List -->
+        <section class="users-list-wrapper">
+            <!-- users filter start -->
+            <div class="card" *ngIf="config.searchFilter">
+                <h5 class="card-header">{{'general.searchFilter' | translate}}</h5>
+                <div class="card-body">
+                    <div class="users-list-filter">
+                        <form>
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <fieldset class="form-group">
+                                        <ng-select [items]="selectRole" [(ngModel)]="selectedRole" name="selectedRole"
+                                            bindLabel="name" placeholder="Select Role"
+                                            (change)="filterByRole($event)"></ng-select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <fieldset class="form-group">
+                                        <ng-select [items]="selectPlan" [(ngModel)]="selectedPlan" name="selectedPlan"
+                                            bindLabel="name" placeholder="Select Plan"
+                                            (change)="filterByPlan($event)"></ng-select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <fieldset class="form-group">
+                                        <ng-select [items]="selectStatus" [(ngModel)]="selectedStatus"
+                                            name="selectedStatus" bindLabel="name" placeholder="Select Status"
+                                            (change)="filterByStatus($event)"></ng-select>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- users filter end -->
+
+            <div class="card">
+                <div class="p-1 filter-container">
+                    <div class="flex-grow-0 pr-1"
+                        *ngIf="(config.editSettingsRequest && config.editSettingsRequest.add) && (!config.actionButtons || config.actionButtons.addButton) && !hideCreateNew && !config.disableCreateNewRow">
+                        <button
+                            class="btn btn-primary pr-1 {{disableCRUD || disabledCreateNew ? 'cursor-not-allowed' : ''}}"
+                            title="{{disableCRUD || disabledCreateNew ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
+                            rippleEffect
+                            (click)="config.formDialog && config.formDialog.type === 'sidebar' ? toggleSidebar('sidebar') : showModalFormDialog(); createNewRecords = true; resetFormValue()"
+                            [disabled]="disabledCreateNew || disableCRUD">
+                            <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
+                                class="d-none d-sm-inline-block">{{'general.addNew' | translate}}</span>
+                        </button>
+                    </div>
+
+                    <div *ngIf="config.regionFilter" class="region-filter">
+                        <ng-select class="select-region" [items]="allDropdownFilterOptions"
+                            [(ngModel)]="selectedDropdownFilter"
+                            [placeholder]="'commonFields.chooseDropdownFilterOption' | translate" [searchable]="true"
+                            (change)="onChangeDropdownFilterOptions($event)">
+                        </ng-select>
+                        <ng-select *ngIf="selectedDropdownFilter === 'Bezirksverwaltung'" class="select-region"
+                            [items]="allRegions" bindLabel="name" bindValue="id" [(ngModel)]="searchRegionValue.id"
+                            [placeholder]="'commonFields.chooseRegionPlaceholder' | translate" [searchable]="true"
+                            (change)="onChangeRegion($event)">
+                        </ng-select>
+
+                        <ng-select *ngIf="selectedDropdownFilter === 'FBZ'" [items]="allFbz" bindLabel="name"
+                            bindValue="id" [(ngModel)]="searchFbzValue.id"
+                            [placeholder]="'commonFields.chooseFbzPlaceholder' | translate" [searchable]="true"
+                            (change)="onChangeFbz($event)">
+                        </ng-select>
+                    </div>
+                    <div class="flex-grow-1 free-search"><input [(ngModel)]="searchValue" name="searchValue"
+                            type="search" class="form-control" (keyup)="filterUpdate($event)"
+                            (search)="filterUpdate($event)" placeholder="{{'general.searchFilter' |
+                                translate}}" />
+                    </div>
+                </div>
+
+
+                <app-no-data *ngIf="!rows || !rows.length"></app-no-data>
+
+
+                <ngx-datatable *ngIf="rows && rows.length" #grid id="grid" [rows]="rows" [rowHeight]="50"
+                    class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force"
+                    [headerHeight]="50" [footerHeight]="50" [sorts]="config.sorting.fields" [scrollbarH]="scrollbarH"
+                    [rowHeight]="'auto'" [offset]="gridConfig && gridConfig.offset ? gridConfig.offset : 0"
+                    (page)="setPage($event)">
+                    <!-- <ngx-datatable-column name="User" prop="fullName" [width]="200">
+              <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                <div class="d-flex align-items-center">
+                  <div *ngIf="row.avatar.length > 0; else customAvatar">
+                    <img class="rounded-circle mr-1" src="{{ row.avatar }}" height="32" width="32"
+                      alt="datatable-avatar" />
+                  </div>
+                  <ng-template #customAvatar>
+                    <div class="avatar mr-1 ml-0" [ngClass]="{
+                        'bg-light-success': row.status == 'active',
+                        'bg-light-secondary': row.status == 'inactive',
+                        'bg-light-warning': row.status == 'pending'
+                      }">
+                      <div class="avatar-content">{{ name | initials }}</div>
+                    </div>
+                  </ng-template>
+                  <div class="cell-line-height">
+                    <a routerLink="/apps/user/user-view/{{ row.id }}" class="font-medium-1 d-block"><span
+                        class="font-weight-bold">{{ name }}</span></a>
+                    <span class="text-muted font-small-2"> @{{ row.username }}</span>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column> -->
+
+                    <!-- <ngx-datatable-row-detail [rowHeight]="50" #myDetailRow (toggle)="onDetailToggle($event)">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                            <div style="padding-left:60px; font-size:14px">
+                                <div>{{ row.gender }}, {{ row.age }}</div>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-row-detail>
+                    <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+                        [canAutoResize]="false">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                            <a title="Expand/Collapse Row" (click)="toggleExpandRow(row)">
+                                Test
+                            </a>
+                        </ng-template>
+                    </ngx-datatable-column> -->
+                    <!-- <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+                        [canAutoResize]="false">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                            <a href="#" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded"
+                                title="Expand/Collapse Row" (click)="toggleExpandRow(row)" class="desktop-hidden">
+                            </a>
+                        </ng-template>
+                    </ngx-datatable-column> -->
+                    <ngx-datatable-column *ngFor="let item of config.columns" [name]="item.title | translate"
+                        [prop]="item.field" [width]="item.width ? item.width : auto" [flexGrow]="item.flexGrow"
+                        [height]="innerWidth > 992 ? '75vh' : '80vh'"
+                        [columnMode]="innerWidth > 1250 ? 'flex' : 'force'" class="{{item.class}}"
+                        [className]="item.className" [headerClass]="item.className" [cellClass]="item.className"
+                        [rowHeight]="'auto'">
+
+                        <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                            <span class="{{item.class}}">{{column.name}}</span>
+                        </ng-template>
+
+                        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex"
+                            ngx-datatable-cell-template>
+                            <div *ngIf="item.template">
+                                <div *ngIf="item.template.type === 'inlineEditing'" class="inline-editing d-flex">
+                                    <button *ngIf="editing != rowIndex"
+                                        class="btn-sm btn-outline-primary {{disableCRUD || disabledCreateNew ? 'cursor-not-allowed' : ''}}"
+                                        title="{{disableCRUD || disabledCreateNew ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
+                                        (click)="editing = rowIndex" [disabled]="disableCRUD">
+                                        <span class="fa fa-pencil-square-o"></span>
+                                        {{'general.edit' | translate}}</button>
+                                    <button *ngIf="editing == rowIndex" class="btn-sm btn-outline-success"
+                                        (click)="updateRow(rowIndex); editing = -1">
+                                        <span class="fa fa-floppy-o"></span> {{'general.save' |translate}}
+                                    </button>
+                                    <!-- <button *ngIf="editing[rowIndex]" class="btn-sm btn-outline-danger"
+                                        (click)="editing[rowIndex] = false">
+                                        <span class="fa fa-remove"></span> {{'general.cancel' | translate}}
+                                    </button> -->
+
+                                </div>
+                                <div *ngIf="item.template.choices" class="datatable-body-cell">
+                                    <div *ngFor="let item of item.template.choices">
+                                        <!-- directly html code -->
+                                        <div *ngIf="item.html">
+                                            <div *ngIf="
+                        item.operator === '==' && value === item.value
+                      " [innerHtml]="item.html"></div>
+                                            <div *ngIf="
+                        item.operator === '!=' && value !== item.value
+                      " [innerHtml]="item.html"></div>
+                                            <div *ngIf="item.operator === '>' && value > item.value"
+                                                [innerHtml]="item.html"></div>
+                                            <div *ngIf="item.operator === '>' && value < item.value"
+                                                [innerHtml]="item.html"></div>
+                                        </div>
+                                        <!-- END -->
+
+                                        <div *ngIf="item.apart" class="datatable-body-cell-label">
+                                            <div *ngIf="item.operator === '==' && value === item.value"
+                                                class="{{item.apart.badge ? item.apart.badge : ''}}">
+                                                <i *ngIf="item.apart.icon"
+                                                    class="{{item.apart.icon}} font-medium-3"></i>
+                                                <span *ngIf="item.apart.title"
+                                                    class="{{item.apart.titleClass ? item.apart.titleClass : ''}} {{item.apart.icon ? 'title-left' : ''}}">{{item.apart.title
+                                                    | translate}}</span>
+                                            </div>
+                                            <div *ngIf="item.operator === '!=' && value !== item.value"
+                                                class="{{item.badge ? item.badge : ''}}">
+                                                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                                                <span *ngIf="item.title"
+                                                    class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                                                    translate}}</span>
+                                            </div>
+                                            <div *ngIf="item.operator === '>' && value > item.value"
+                                                class="{{item.badge ? item.badge : ''}}">
+                                                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                                                <span *ngIf="item.title"
+                                                    class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                                                    translate}}</span>
+                                            </div>
+                                            <div *ngIf="item.operator === '>' && value < item.value"
+                                                class="{{item.badge ? item.badge : ''}}">
+                                                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+                                                <span *ngIf="item.title"
+                                                    class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
+                                                    translate}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="item.template.type === 'action'" ngbDropdown container="body">
+                                    <div *ngIf="item.template.actionMode.type === 'menu'">
+                                        <button ngbDropdownToggle type="button"
+                                            class="btn icon-btn btn-sm hide-arrow {{disableCRUD ? 'cursor-not-allowed' : 'cursor-pointer'}}"
+                                            title="{{disableCRUD ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
+                                            [disabled]="disableCRUD" rippleEffect>
+                                            <span [data-feather]="item.template.actionMode.icon"></span>
+                                        </button>
+                                        <div ngbDropdownMenu>
+
+                                            <a *ngFor="let item of item.template.actionMode.menu"
+                                                (click)="actionColumn(item, value, row)" ngbDropdownItem><span
+                                                    [data-feather]="item.icon" [size]="16" [class]="'mr-50'"></span>
+                                                {{item.actionName | translate}}</a>
+
+                                            <!-- <a routerLink="/apps/user/user-view/{{ value }}" ngbDropdownItem><span
+                                                    [data-feather]="'file-text'" [size]="16" [class]="'mr-50'"></span>
+                                                Details</a><a routerLink="/apps/user/user-edit/{{ value }}"
+                                                ngbDropdownItem><span [data-feather]="'edit'" [size]="16"
+                                                    [class]="'mr-50'"></span> Edit</a><a href="javascript:;"
+                                                ngbDropdownItem><span [data-feather]="'trash'" [size]="16"
+                                                    [class]="'mr-50'"></span> Delete</a> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="item.template.actionMode.type === 'button'">
+                                        <button *ngIf="item.template.actionMode.routerLink" type="button"
+                                            class="btn icon-btn btn-sm hide-arrow"
+                                            (click)="openLink(item.template.actionMode.routerLink, row)" rippleEffect>
+                                            <span [data-feather]="item.template.actionMode.icon"
+                                                [class]="'cursor-pointer'"></span>
+                                        </button>
+                                        <button *ngIf="item.template.actionMode.action" type="button"
+                                            class="btn icon-btn btn-sm hide-arrow"
+                                            (click)="actionColumn(item.template.actionMode.action, value, row)"><span
+                                                [data-feather]="item.template.actionMode.action.icon"
+                                                [class]="'cursor-pointer'"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="!item.template" class="{{item.class}}">
+                                <div *ngIf="item.type === 'date'">
+                                    {{value | date: item.format}}
+                                </div>
+                                <div *ngIf="item.type === 'string'">
+                                    <span *ngIf="editing != rowIndex || item.noEditable">
+                                        {{value}}
+                                    </span>
+                                    <input class=" form-control" *ngIf="editing == rowIndex && !item.noEditable"
+                                        name="{{item.field}}" [(ngModel)]="rows[rowIndex][item.field]" />
+                                </div>
+                            </div>
+                            <!-- <div>
+                  <i class="feather icon-edit-2 text-info font-medium-3"></i>
+                  {{ value }} {{item.template | json}}
+                </div> -->
+                        </ng-template>
+
+                    </ngx-datatable-column>
+                    <!-- <ngx-datatable-column name="Email" prop="email" [width]="200"></ngx-datatable-column>
+            <ngx-datatable-column name="Role" prop="role" [width]="100">
+              <ng-template let-role="value" ngx-datatable-cell-template>
+                <div>
+                  <i class="feather font-medium-3" [ngClass]="{
+                      'icon-edit-2 text-info': role == 'Editor',
+                      'icon-settings text-warning': role == 'Author',
+                      'icon-database text-success': role == 'Maintainer',
+                      'icon-user text-primary': role == 'Subscriber',
+                      'icon-slack text-danger': role == 'Admin'
+                    }"></i>
+                  {{ role }}
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Plan" prop="currentPlan" [width]="100"></ngx-datatable-column>
+            <ngx-datatable-column name="Status" prop="status" [width]="50">
+              <ng-template let-status="value" ngx-datatable-cell-template>
+                <div class="badge badge-pill" [ngClass]="{
+                    'badge-light-success': status == 'active',
+                    'badge-light-secondary': status == 'inactive',
+                    'badge-light-warning': status == 'pending'
+                  }">
+                  {{ status }}
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Actions" [width]="40" [sortable]="false">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <div ngbDropdown container="body">
+                  <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow" rippleEffect>
+                    <span [data-feather]="'more-vertical'" [class]="'cursor-pointer'"></span>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <a routerLink="/apps/user/user-view/{{ row.id }}" ngbDropdownItem><span [data-feather]="'file-text'"
+                        [size]="16" [class]="'mr-50'"></span> Details</a><a routerLink="/apps/user/user-edit/{{ row.id }}"
+                      ngbDropdownItem><span [data-feather]="'edit'" [size]="16" [class]="'mr-50'"></span> Edit</a><a
+                      href="javascript:;" ngbDropdownItem><span [data-feather]="'trash'" [size]="16"
+                        [class]="'mr-50'"></span> Delete</a>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column> -->
+                    <!-- <ngx-datatable-footer>
+                        <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+                            let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset">
+                            <div class="d-flex align-items-center justify-content-between full-width p-2">
+                                <div>
+                                    {{rowCount}} {{'general.total' | translate}}
+                                </div>
+                                <div>
+                                    <label class="d-flex align-items-center">{{'general.show' | translate}}
+                                        <select class="form-control mx-25" [(ngModel)]="selectedOption">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                        {{'general.entries' | translate}}</label>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-footer> -->
+                </ngx-datatable>
+            </div>
+        </section>
+        <!--/ User List -->
+    </div>
+
+    <!-- Sidebar -->
+    <core-sidebar class="modal modal-slide-in sidebar-todo-modal fade"
+        (collapsedChangedEvent)="handlerCloseSidebar($event)" [stayOpened]="stayOpened" name="sidebar"
+        overlayClass="modal-backdrop">
+        <div class="slideout-content">
+            <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
+                <div class="modal-dialog {{modalDialogSize}}">
+                    <form class="add-new-user modal-content pt-0" (ngSubmit)="(newUserForm.form.valid)"
+                        #newUserForm="ngForm">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="toggleSidebar('sidebar')">
+                            ×
+                        </button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="exampleModalLabel">{{createNewRecords ? ('general.newEntrie' |
+                                translate) : ('general.editEntrie' | translate)}}</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <app-dynamic-forms *ngIf="config.config && config.config.length > 0" [config]="config"
+                                [partOfGrid]="true" [data]="data" (submit)="submitEmitter($event)" #form="dynamicForm">
+                            </app-dynamic-forms>
+                            <ng-template #form *ngIf="!config.config || !config.config.length"
+                                [ngTemplateOutlet]="template" [ngTemplateOutletContext]="data"></ng-template>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </core-sidebar>
+    <!--/ Sidebar -->
+
+    <!-- Dialog -->
+    <ng-template #modalForm let-modal class="modal-dialog modal-lg modal-dialog-centered display-none">
+        <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel160">{{'general.newEntrie' | translate}}</h5>
+            <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+            <app-dynamic-forms *ngIf="config.config && config.config.length > 0" [config]="config" [partOfGrid]="true"
+                [data]="data" (submit)="submitEmitter($event)" #form="dynamicForm">
+            </app-dynamic-forms>
+        </div>
+    </ng-template>
+
+    <!--/ Dialog -->
+
+    <!--DELETE QUESTION MODULE-->
+
+    <ng-template #modal let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel160">{{'generalDialog.areYouSure' | translate}}</h5>
+            <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+            {{'generalDialog.deleteQuestion' | translate}}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="allowExecuteActionFromModal()" rippleEffect>
+                {{'generalDialog.yes' | translate}}
+            </button>
+            <button type="button" class="btn btn-default" (click)="modal.close('Accept click')" rippleEffect>
+                {{'generalDialog.no' | translate}}
+            </button>
+        </div>
+    </ng-template>
+
+    <!--/ DELETE QUESTION MODULE-->
+
+    <!-- CONFIRM DIALOG -->
+
+    <app-dialog-confirm #dialogUnsavedContentConfirm [title]="('general.discardChangesTitle' | translate)"
+        [content]="('general.discardChangesText' | translate)"
+        [confirmButtonText]="('general.discardChangesConfirm' | translate)"
+        [cancelButtonText]="('general.discardChangesCancel' | translate)" (confirm)="confirmUnsavedContent()"
+        (cancel)="cancelUnsavedContent()"></app-dialog-confirm>
+
+    <!-- CONFIRM DIALOG -->
+
+
+    <!-- EXPORT  -->
+
+    <div *ngIf="config && rows" id="export-grid" class="{{showExportGrid ? 'd-block' : 'd-none'}}">
+        <table cellspacing="0" rules="all" border="1">
+            <tr>
+                <div *ngFor="let item of config.columns" class="d-contents">
+                    <th *ngIf="!item.template">{{item.title | translate}}</th>
+                </div>
+            </tr>
+            <tr *ngFor="let value of rows">
+                <div *ngFor="let item of config.columns" class="d-contents">
+                    <td *ngIf="!item.template">{{value[item.field]}}</td>
+                </div>
+            </tr>
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,17 @@
+<div *ngIf="group" [ngClass]="[config.width]" [formGroup]="group"
+    class="form-group form-custom {{config.hide ? 'hide' : ''}}">
+    <label *ngIf="config.title" class="custom-label">{{config.title | translate
+        }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' :
+            ''}}</span>
+        <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+    </label>
+    <p *ngIf="group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched)"
+        class="error must-label m-0">{{'form.mustFillThisField' |
+        translate}}</p>
+    <div class="input-group form-password-toggle">
+        <int-phone-prefix class="phone-prefix" defaultCountry="{{country}}" [formControlName]="config.name"
+            [disabled]="config.disabled!"></int-phone-prefix>
+
+
+    </div>
+</div>

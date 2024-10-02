@@ -1,0 +1,259 @@
+{
+    "pageSize": 10,
+    "request": {
+        "type": "GET",
+        "api": "/api/superadmin/getAllUsers",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "paging": {
+        "enable": true,
+        "settings": {
+            "pageSizes": true,
+            "pageSize": 20
+        }
+    },
+    "sorting": {
+        "enable": true
+    },
+    "grouping": {
+        "enable": true,
+        "group": []
+    },
+    "filtering": {
+        "enable": true,
+        "settings": {
+            "type": "Menu"
+        }
+    },
+    "formDialog": {
+        "type": "sidebar",
+        "closeAfterExecute": false,
+        "size": "lg"
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "disableCreateNewRow": true,
+    "editSettings": {
+        "allowEditing": true,
+        "allowAdding": true,
+        "allowDeleting": true,
+        "showDeleteConfirmDialog": true,
+        "mode": "Dialog"
+    },
+    "editSettingsRequest": {
+        "add": {
+            "type": "POST",
+            "api": "/api/superadmin/setUser",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        }
+    },
+    "columns": [
+        {
+            "title": "commonFields.action",
+            "template": {
+                "type": "action",
+                "actionMode": {
+                    "type": "menu",
+                    "icon": "more-vertical",
+                    "menu": [
+                        {
+                            "type": "edit",
+                            "actionName": "general.edit",
+                            "icon": "edit",
+                            "formDialog": {
+                                "type": "sidebar",
+                                "closeAfterExecute": true
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "actionName": "general.delete",
+                            "icon": "trash",
+                            "executeAction": {
+                                "request": {
+                                    "type": "POST",
+                                    "api": "/api/superadmin/deleteUser",
+                                    "parameters": [],
+                                    "fields": "",
+                                    "root": ""
+                                },
+                                "response": "toastr",
+                                "showQuestionBeforeExecute": true,
+                                "modalConfig": {
+                                    "modalTitle": "",
+                                    "modalText": "",
+                                    "windowClass": "modal modal-danger"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "field": "allow_online"
+        },
+        {
+            "title": "commonFields.firstname",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "firstname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.lastname",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "lastname",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.email",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "email",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.active",
+            "template": {
+                "choices": [
+                    {
+                        "field": "active",
+                        "value": 0,
+                        "operator": "==",
+                        "apart": {
+                            "title": "inactive",
+                            "badge": "badge badge-pill badge-light-danger"
+                        }
+                    },
+                    {
+                        "field": "active",
+                        "value": 1,
+                        "operator": "==",
+                        "apart": {
+                            "title": "active",
+                            "badge": "badge badge-pill badge-light-success"
+                        }
+                    }
+                ]
+            },
+            "field": "active",
+            "filter": {
+                "type": "CheckBox"
+            }
+        }
+    ],
+    "config": [
+        {
+            "type": "textbox",
+            "width": "col-md-12 hidden",
+            "class": "e-outline",
+            "name": "id",
+            "title": "ID",
+            "field": "id"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "firstname",
+            "title": "commonFields.firstname",
+            "field": "firstname",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "lastname",
+            "title": "commonFields.lastname",
+            "field": "lastname",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "street",
+            "title": "commonFields.street",
+            "field": "street"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "location",
+            "title": "commonFields.location",
+            "field": "location"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "email",
+            "title": "commonFields.email",
+            "field": "email",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "username",
+            "title": "commonFields.username",
+            "field": "username",
+            "required": true
+        },
+        {
+            "type": "password",
+            "subType": "generatePassword",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "password",
+            "title": "commonFields.password",
+            "field": "password",
+            "dependentField": "id"
+        },
+        {
+            "type": "switch",
+            "width": "col-12",
+            "class": "e-outline",
+            "name": "active",
+            "title": "commonFields.active",
+            "field": "active"
+        },
+        {
+            "type": "button",
+            "width": "col-md-12",
+            "class": "btn btn-primary",
+            "name": "submit",
+            "title": "general.save",
+            "field": "submit",
+            "positionClass": "text-right mt-3 col-md-12"
+        }
+    ]
+}

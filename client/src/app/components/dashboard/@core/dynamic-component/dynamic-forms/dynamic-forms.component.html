@@ -1,0 +1,45 @@
+<div *ngIf="config && !config.childrens">
+  <div *ngIf="loader" style="height: 70vh">
+    <app-loader></app-loader>
+  </div>
+  <div *ngIf="!loader">
+    <app-dynamic-action-button *ngIf="config.actionButtons && !hideActionButtons" [config]="config" [data]="data"
+      [path]="path" [file]="file" [componentType]="'form'"
+      (refreshFormData)="refreshFormData($event)"></app-dynamic-action-button>
+    <div *ngIf="config && config.additionalInfo" class="{{ !hideActionButtons ? config.class : '' }}">
+      <div class="card card-form">
+        <div class="row no-gutters">
+          <div class="col-lg-4 card-body">
+            <p>
+              <strong *ngIf="config.additionalInfo.title" class="headings-color">{{ config.additionalInfo.title
+                }}</strong>
+            </p>
+            <p *ngIf="config.additionalInfo.text" class="text-muted">
+              {{ config.additionalInfo.text }}
+            </p>
+          </div>
+          <div class="col-lg-8 card-form__body card-body">
+            <form [formGroup]="form" (submit)="handleSubmit($event)">
+              <ng-container *ngFor="let field of config.config" dynamicField [config]="field" [group]="form">
+              </ng-container>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="config && config.additionalInfo === undefined" class="{{ !hideActionButtons ? config.class : '' }}">
+      <form [formGroup]="form" (submit)="handleSubmit($event)" (change)="onValueChange($event)">
+        <ng-container *ngFor="let field of config.config" dynamicField [config]="field" [group]="form">
+        </ng-container>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngIf="config.childrens">
+    <app-dynamic-forms
+      *ngFor="let item of config.childrens"
+      [config]="item"
+    ></app-dynamic-forms>
+  </div>
+   -->

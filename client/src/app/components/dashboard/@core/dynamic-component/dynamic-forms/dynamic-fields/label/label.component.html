@@ -1,0 +1,11 @@
+<div [ngClass]="[config.width]" [formGroup]="group" class="form-group form-custom {{config.hide ? 'hide' : ''}}">
+  <h4 *ngIf="config.title" class="custom-label {{config.class}}">{{
+    config.title | translate
+    }}
+    <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+  </h4>
+  <h6 *ngIf="config.text">
+    {{ config.text | translate}}
+    <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+  </h6>
+</div>

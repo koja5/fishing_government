@@ -1,0 +1,40 @@
+<div [ngClass]="[config.width]" [formGroup]="group" class="form-group form-custom">
+
+    <!-- <div class="custom-control custom-radio" *ngFor="let item of config.dataArray">
+        <input type="radio" class="custom-control-input" [name]="config.name" [value]="item.id" [id]="item.id"
+            [formControlName]="config.name" />
+        <label class="custom-control-label" [for]="item.id">{{
+            item.title | translate
+            }}</label>
+    </div> -->
+    <label *ngIf="config.title" class="custom-label">{{config.title | translate
+        }} <span class="error" title="{{'form.fieldIsRequired' | translate}}">{{config.required ? '*' :
+            ''}}</span>
+        <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+    </label>
+    <p *ngIf="group && group.controls[config.field].status === 'INVALID' && (group.pending || group.controls[config.field].touched)"
+        class="error must-label m-0">{{'form.mustFillThisField' |
+        translate}}</p>
+    <div class="{{config.oneLine ? 'd-flex justify-content-around' : ''}} mt-75">
+        <div *ngFor="let item of config.dataArray" class="form-check form-check-inline {{item.class}}">
+            <input class="form-check-input {{config.readonly ? 'radio-disabled': ''}}" type="radio" [name]="config.name"
+                [value]="item.id" [id]="item.id" [formControlName]="config.name">
+            <label class="form-check-label  {{config.readonly ? 'radio-disabled': ''}}" [for]="item.id">{{
+                item.title | translate
+                }}
+                <!-- <app-explanation-mark *ngIf="config.explanation"
+                    [explanation]="config.explanation"></app-explanation-mark> -->
+            </label>
+        </div>
+    </div>
+</div>
+<!-- <div class="demo-inline-spacing">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+        <label class="form-check-label" for="inlineRadio1">Checked</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+        <label class="form-check-label" for="inlineRadio2">Checked2</label>
+    </div>
+</div> -->
