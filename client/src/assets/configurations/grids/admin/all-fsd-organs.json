@@ -78,7 +78,7 @@
             }
         },
         {
-            "title": "commonFields.firstname",
+            "title": "commonFields.lastname",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -90,7 +90,7 @@
             }
         },
         {
-            "title": "commonFields.lastname",
+            "title": "commonFields.firstname",
             "filterable": true,
             "hideable": true,
             "filter": "date",

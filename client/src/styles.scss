@@ -161,3 +161,7 @@
   ):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) {
   border-color: 1px solid #d8d6de !important;
 }
+
+.badge {
+  white-space: break-spaces;
+}

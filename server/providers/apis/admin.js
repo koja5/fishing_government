@@ -58,20 +58,22 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        console.log(req.query.bh);
         let query =
-          "select fo.*, b.bh, b.fbz from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id where fo.sperre = 0 and fo.todesfall = 0";
+          "select fo.*, b.bh, fbz_link.FBZ from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id join FBZ_linked_to_Bestellungen fbz_link on b.UniID = fbz_link.UniID_link where fo.sperre = 0 and fo.todesfall = 0";
+
         if (req.query.bh != "null" && req.query.fbz != "null") {
+          query +=
+            " join FBZ_linked_to_Bestellungen fbz_link on b.UniID = fbz_link.UniID_link";
           query +=
             " and b.bh = '" +
             req.query.bh +
-            "' and b.fbz='" +
+            "' and fbz_link.FBZ='" +
             req.query.fbz +
             "'";
         } else if (req.query.bh != "null" && req.query.fbz == "null") {
           query += " and b.bh = '" + req.query.bh + "'";
         } else if (req.query.bh == "null" && req.query.fbz != "null") {
-          query += " and b.fbz = '" + req.query.fbz + "'";
+          query += " and fbz_link.FBZ = '" + req.query.fbz + "'";
         } else {
           query =
             "select distinct fo.*, b.bh from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id where fo.sperre = 0 and fo.todesfall = 0";
@@ -79,7 +81,6 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
 
         query += " group by fo.fsd_id";
 
-        console.log(query);
         conn.query(query, function (err, rows, fields) {
           conn.release();
           if (err) {

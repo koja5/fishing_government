@@ -12,6 +12,7 @@ import { CoreConfigService } from "@core/services/config.service";
 import { CallApiService } from "app/services/call-api.service";
 import { StorageService } from "app/services/storage.service";
 import { UserTypes } from "app/components/dashboard/enums/user-types";
+import { ResponseModel } from "app/components/models/response-model";
 
 @Component({
   selector: "app-forgot-password",
@@ -27,6 +28,7 @@ export class ForgotPasswordComponent {
   public returnUrl: string;
   public error = "";
   public passwordTextType: boolean;
+  public response = new ResponseModel();
 
   // Private
   private _unsubscribeAll: Subject<any>;
@@ -76,53 +78,6 @@ export class ForgotPasswordComponent {
     this.passwordTextType = !this.passwordTextType;
   }
 
-  onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.forgotPasswordForm.invalid) {
-      return;
-    }
-
-    // Login
-    this.loading = true;
-
-    this._service
-      .callPostMethod("/api/auth/login", this.forgotPasswordForm.value)
-      .subscribe((data: any) => {
-        if (data && data.token) {
-          this._storageService.setToken(data.token);
-          // window.open("dashboard/admin", "_self");
-
-          const type = this._storageService.getDecodeToken().type as UserTypes;
-          const previousLink =
-            this._storageService.getLocalStorage("previousLink");
-          if (previousLink) {
-            window.open(previousLink, "_self");
-            this._storageService.removeLocalStorage("previousLink");
-          } else if (type === UserTypes.admin) {
-            window.open("/dashboard/admin/all-users", "_self");
-          } else {
-            window.open("/dashboard/owner/fish-stocking", "_self");
-          }
-          // const user = this._storageService.getDecodeToken();
-          // if (!user.firstname || !user.lastname) {
-          //   // this._router.navigate(["wizard"]);
-          //   window.open("wizard", "_self");
-          // } else {
-          //   // this._router.navigate(["dashboard/admin"]);
-          //   window.open("dashboard/admin", "_self");
-          // }
-          this.loading = false;
-        } else {
-          this.error = data.type;
-          this.loading = false;
-        }
-      });
-
-    // redirect to home page
-  }
-
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
 
@@ -152,5 +107,32 @@ export class ForgotPasswordComponent {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.forgotPasswordForm.invalid) {
+      return;
+    }
+
+    this.sendResetLink();
+  }
+
+  sendResetLink() {
+    this.response = new ResponseModel();
+    this._service
+      .callPostMethod("/api/auth/forgotPassword", {
+        data: this.forgotPasswordForm.value,
+        lang: this._storageService.getSelectedLanguage(),
+      })
+      .subscribe((data) => {
+        if (data) {
+          this.response.sendLinkForResetOnMail = true;
+        } else {
+          this.response.mailNotExists = true;
+        }
+      });
   }
 }

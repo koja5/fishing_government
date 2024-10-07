@@ -47,6 +47,30 @@ router.post("/sendNewGeneratedPassword", function (req, res, next) {
 
 //#endregion
 
+//#region AUTH
+
+router.post("/resetPasswordLink", function (req, res, next) {
+  var configuration = JSON.parse(
+    fs.readFileSync(__dirname + "/i18n/forgot_password.json", "utf-8")
+  );
+
+  body = getMessage(configuration, req.body.lang);
+
+  // generate reset password
+  body["reset_password_link"] =
+    process.env.link_client + "auth/reset-password/" + sha1(req.body.email);
+
+  sendMail(
+    req.body.email,
+    getSubject(configuration, req.body.lang),
+    body,
+    configuration.template,
+    res
+  );
+});
+
+//#endregion
+
 //#region HELPFUL SERVICE
 
 function getSubject(configuration, lang) {

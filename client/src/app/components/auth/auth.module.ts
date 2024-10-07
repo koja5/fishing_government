@@ -9,6 +9,7 @@ import { LoginComponent } from "./login/login.component";
 import { CoreCommonModule } from "@core/common.module";
 import { CookieModule, CookieService } from "ngx-cookie";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 
 const routes: Routes = [
   {
@@ -19,10 +20,18 @@ const routes: Routes = [
     path: "forgot-password",
     component: ForgotPasswordComponent,
   },
+  {
+    path: "reset-password/:email",
+    component: ResetPasswordComponent,
+  },
 ];
 
 @NgModule({
-  declarations: [LoginComponent, ForgotPasswordComponent],
+  declarations: [
+    LoginComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

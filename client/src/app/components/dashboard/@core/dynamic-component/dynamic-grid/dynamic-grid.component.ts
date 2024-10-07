@@ -80,7 +80,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   // Public
   public sidebarToggleRef = false;
   public rows;
-  public selectedOption = 10;
+  public selectedOption = 11;
   public ColumnMode = ColumnMode;
   public temp = [];
   public previousRoleFilter = "";
@@ -919,7 +919,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
             temp = tempFilter;
           }
 
-          this.rows = temp;
+          this.rows = this.sortByLastname(temp);
           this.loader = false;
           this.loaderContent = false;
         });
@@ -944,5 +944,12 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     }
 
     // Update The Rows
+  }
+
+  sortByLastname(data) {
+    const sortedData = data.sort((a, b) => {
+      return a.nachname.localeCompare(b.nachname);
+    });
+    return sortedData;
   }
 }
