@@ -72,6 +72,52 @@
             "title": "fsdOrgan.email",
             "field": "email",
             "readonly": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "sperre",
+            "title": "fsdOrgan.sperre",
+            "field": "sperre",
+            "replacedValue": [
+                {
+                    "field": "sperre",
+                    "value": 1,
+                    "operator": "!=",
+                    "newValue": "-"
+                },
+                {
+                    "field": "sperre",
+                    "value": 1,
+                    "operator": "==",
+                    "newValue": "Unklare Adressdaten beim LFVS aufliegend!"
+                }
+            ],
+            "readonly": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "todesfall",
+            "title": "fsdOrgan.todesfall",
+            "field": "todesfall",
+            "replacedValue": [
+                {
+                    "field": "todesfall",
+                    "value": 1,
+                    "operator": "!=",
+                    "newValue": "-"
+                },
+                {
+                    "field": "todesfall",
+                    "value": 1,
+                    "operator": "==",
+                    "newValue": "Laut Informationsstand LFVS bereits verstorben!"
+                }
+            ],
+            "readonly": true
         }
     ]
 }

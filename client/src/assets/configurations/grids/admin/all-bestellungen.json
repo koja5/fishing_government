@@ -60,6 +60,26 @@
             "field": "bescheid_datum",
             "validation": {
                 "required": true
+            },
+            "template": {
+                "choices": [
+                    {
+                        "field": "bescheid_datum",
+                        "value": "0000-00-00",
+                        "operator": "==",
+                        "apart": {
+                            "title": "-",
+                            "badge": ""
+                        }
+                    },
+                    {
+                        "field": "bescheid_datum",
+                        "type": "date",
+                        "format": "dd.MM.yyyy",
+                        "value": "0000-00-00",
+                        "operator": "!="
+                    }
+                ]
             }
         },
         {
@@ -107,8 +127,8 @@
                         "value": 0,
                         "operator": "==",
                         "apart": {
-                            "title": "commonFields.active",
-                            "badge": "badge badge-pill badge-light-success"
+                            "title": "-",
+                            "badge": ""
                         }
                     },
                     {
@@ -116,13 +136,57 @@
                         "value": -1,
                         "operator": "==",
                         "apart": {
-                            "title": "commonFields.deactive",
-                            "badge": "badge badge-pill badge-light-danger"
+                            "title": "bestellungen.bezirkActive",
+                            "badge": "badge badge-pill badge-light-success"
+                        }
+                    },
+                    {
+                        "field": "bezirk",
+                        "value": 1,
+                        "operator": "==",
+                        "apart": {
+                            "title": "bestellungen.bezirkActive",
+                            "badge": "badge badge-pill badge-light-success"
                         }
                     }
                 ]
             },
             "field": "bezirk"
+        },
+        {
+            "title": "bestellungen.land",
+            "template": {
+                "choices": [
+                    {
+                        "field": "land",
+                        "value": 0,
+                        "operator": "==",
+                        "apart": {
+                            "title": "-",
+                            "badge": ""
+                        }
+                    },
+                    {
+                        "field": "land",
+                        "value": -1,
+                        "operator": "==",
+                        "apart": {
+                            "title": "bestellungen.landActive",
+                            "badge": "badge badge-pill badge-light-success"
+                        }
+                    },
+                    {
+                        "field": "land",
+                        "value": 1,
+                        "operator": "==",
+                        "apart": {
+                            "title": "bestellungen.landActive",
+                            "badge": "badge badge-pill badge-light-success"
+                        }
+                    }
+                ]
+            },
+            "field": "land"
         },
         {
             "title": "bestellungen.dienstnummer",
@@ -159,6 +223,57 @@
             "field": "bestellt_seit",
             "validation": {
                 "required": true
+            },
+            "template": {
+                "choices": [
+                    {
+                        "field": "bestellt_seit",
+                        "value": "0000-00-00",
+                        "operator": "==",
+                        "apart": {
+                            "title": "-",
+                            "badge": ""
+                        }
+                    },
+                    {
+                        "field": "bestellt_seit",
+                        "type": "date",
+                        "format": "dd.MM.yyyy",
+                        "value": "0000-00-00",
+                        "operator": "!="
+                    }
+                ]
+            }
+        },
+        {
+            "title": "bestellungen.abbestellung",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "class": "text-align-right",
+            "field": "Abbestellung",
+            "validation": {
+                "required": true
+            },
+            "template": {
+                "choices": [
+                    {
+                        "field": "Abbestellung",
+                        "value": "0000-00-00",
+                        "operator": "==",
+                        "apart": {
+                            "title": "-",
+                            "badge": ""
+                        }
+                    },
+                    {
+                        "field": "Abbestellung",
+                        "type": "date",
+                        "format": "dd.MM.yyyy",
+                        "value": "0000-00-00",
+                        "operator": "!="
+                    }
+                ]
             }
         }
     ],

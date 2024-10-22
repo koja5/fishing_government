@@ -244,6 +244,9 @@
         "bezirk": "Bezirk",
         "dienstnummer": "Dienstnummer",
         "abzeichennummer": "Abzeichennummer",
-        "bestelltSeit": "Bestellt seit"
+        "bestelltSeit": "Bestellt seit",
+        "bezirkActive": "für gesamten Bezirk",
+        "landActive": "für gesamtes Land",
+        "abbestellung": "Abbestellung"
     }
 }

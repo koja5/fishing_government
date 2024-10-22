@@ -27,7 +27,6 @@ router.get("/", (req, res) => {
 router.get("/getMyProfile", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
-      console.log(req.user.user);
       if (err) {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);

@@ -54,27 +54,63 @@
                     </div>
 
                     <div *ngIf="config.regionFilter" class="region-filter">
-                        <ng-select class="select-region" [items]="allDropdownFilterOptions"
-                            [(ngModel)]="selectedDropdownFilter"
-                            [placeholder]="'commonFields.chooseDropdownFilterOption' | translate" [searchable]="true"
-                            (change)="onChangeDropdownFilterOptions($event)">
-                        </ng-select>
-                        <ng-select *ngIf="selectedDropdownFilter === 'Bezirksverwaltung'" class="select-region"
-                            [items]="allRegions" bindLabel="name" bindValue="id" [(ngModel)]="searchRegionValue.id"
-                            [placeholder]="'commonFields.chooseRegionPlaceholder' | translate" [searchable]="true"
-                            (change)="onChangeRegion($event)">
-                        </ng-select>
-
-                        <ng-select *ngIf="selectedDropdownFilter === 'FBZ'" [items]="allFbz" bindLabel="name"
-                            bindValue="id" [(ngModel)]="searchFbzValue.id"
-                            [placeholder]="'commonFields.chooseFbzPlaceholder' | translate" [searchable]="true"
-                            (change)="onChangeFbz($event)">
-                        </ng-select>
+                        <div>
+                            <label>{{'commonFields.chooseDropdownFilterOptionTitle' | translate}} <app-explanation-mark
+                                    [explanation]="('commonFields.chooseDropdownFilterOptionExplanation' | translate)"></app-explanation-mark></label>
+                            <ng-select class="select-region" [items]="allDropdownFilterOptions"
+                                [(ngModel)]="selectedDropdownFilter"
+                                [placeholder]="'commonFields.chooseDropdownFilterOption' | translate"
+                                [searchable]="true" (change)="onChangeDropdownFilterOptions($event)">
+                            </ng-select>
+                        </div>
+                        <div *ngIf="selectedDropdownFilter === 'Bezirksverwaltung'" class="filter-search">
+                            <label>{{'commonFields.chooseRegionTitle' | translate}} <app-explanation-mark
+                                    [explanation]="('commonFields.chooseRegionExplanation' | translate)"></app-explanation-mark></label>
+                            <ng-select class="select-region" [items]="allRegions" bindLabel="name" bindValue="id"
+                                [(ngModel)]="searchRegionValue.id"
+                                [placeholder]="'commonFields.chooseRegionPlaceholder' | translate" [searchable]="true"
+                                (change)="onChangeRegion($event)">
+                            </ng-select>
+                        </div>
+                        <div *ngIf="selectedDropdownFilter === 'FBZ'" class="filter-search">
+                            <label>{{'commonFields.chooseFbzTitle' | translate}} <app-explanation-mark
+                                    [explanation]="('commonFields.chooseFbzExplanation' | translate)"></app-explanation-mark></label>
+                            <ng-select [items]="allFbz" bindLabel="name" bindValue="id" [(ngModel)]="searchFbzValue.id"
+                                [placeholder]="'commonFields.chooseFbzPlaceholder' | translate" [searchable]="true"
+                                (change)="onChangeFbz($event)">
+                            </ng-select>
+                        </div>
                     </div>
-                    <div class="flex-grow-1 free-search"><input [(ngModel)]="searchValue" name="searchValue"
-                            type="search" class="form-control" (keyup)="filterUpdate($event)"
-                            (search)="filterUpdate($event)" placeholder="{{'general.searchFilter' |
+                    <div class="flex-grow-1 free-search">
+
+                        <label>{{'commonFields.search' | translate}} <app-explanation-mark
+                                [explanation]="('commonFields.searchExplanation' | translate)"></app-explanation-mark></label>
+                        <input [(ngModel)]="searchValue" name="searchValue" type="search" class="form-control"
+                            (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" placeholder="{{'general.searchFilter' |
                                 translate}}" />
+                    </div>
+                    <div class="export-option">
+                        <li ngbDropdown class="nav-item dropdown-user" style="list-style-type: none;">
+                            <a class="nav-link dropdown-toggle export-custom-option" id="dropdown-user"
+                                ngbDropdownToggle id="navbarUserDropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-file-excel-o options excel-icon"></span>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="navbarUserDropdown"
+                                class="dropdown-menu dropdown-menu-right">
+                                <a ngbDropdownItem (click)="exportBirthdayAndFortbildung()"> <span
+                                        class="fa fa-file-excel-o excel-icon"></span>
+                                    {{'fsdOrgan.exportBirthdayAndFortbildung' | translate}}</a>
+                                <a ngbDropdownItem (click)="exportAllPersonalInformationAndFortbildungen()"> <span
+                                        class="fa fa-file-excel-o excel-icon"></span>
+                                    {{'fsdOrgan.exportPersonalInformationAndFortbildung' | translate}}</a>
+                                <a ngbDropdownItem
+                                    (click)="exportAllPersonalInformationAndFortbildungenAndBestellungen()"> <span
+                                        class="fa fa-file-excel-o excel-icon"></span>
+                                    {{'fsdOrgan.exportPersonalInformationAndFortbildungAndBestellungen' |
+                                    translate}}</a>
+
+                            </div>
+                        </li>
                     </div>
                 </div>
 
@@ -212,6 +248,25 @@
                                                 <span *ngIf="item.title"
                                                     class="{{item.titleClass ? item.titleClass : ''}}">{{item.title |
                                                     translate}}</span>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!item.apart && !item.html">
+                                            <div *ngIf="item.operator === '!=' && value !== item.value"
+                                                class="{{item.badge ? item.badge : ''}}">
+                                                <i *ngIf="item.icon" class="{{item.icon}} font-medium-3"></i>
+
+                                                <div *ngIf="item.type === 'date'">
+                                                    {{value | date: item.format}}
+                                                </div>
+                                                <div *ngIf="item.type === 'string'">
+                                                    <span *ngIf="editing != rowIndex || item.noEditable">
+                                                        {{value}}
+                                                    </span>
+                                                    <input class=" form-control"
+                                                        *ngIf="editing == rowIndex && !item.noEditable"
+                                                        name="{{item.field}}"
+                                                        [(ngModel)]="rows[rowIndex][item.field]" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

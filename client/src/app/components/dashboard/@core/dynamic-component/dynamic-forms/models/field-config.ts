@@ -52,4 +52,5 @@ export class FieldConfig {
   disableUpload?: boolean;
   disableRemove?: boolean;
   dependentField?: string;
+  replacedValue?: any;
 }

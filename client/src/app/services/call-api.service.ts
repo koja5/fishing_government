@@ -83,7 +83,7 @@ export class CallApiService {
     }
   }
 
-  callPostMethod(api: string, data: any) {
+  callPostMethod(api: string, data?: any) {
     return this.http.post(api, data, { headers: this.headers });
   }
 

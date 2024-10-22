@@ -15,5 +15,31 @@ export class TextBoxComponent implements OnInit {
     this.group = new FormGroup({});
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.config.replacedValue) {
+      for (let i = 0; i < this.config.replacedValue.length; i++) {
+        if (this.group.controls[this.config.replacedValue[i].field]) {
+          if (this.config.replacedValue[i].operator === "==") {
+            if (
+              this.group.controls[this.config.replacedValue[i].field].value ==
+              this.config.replacedValue[i].value
+            ) {
+              this.group.controls[this.config.replacedValue[i].field].setValue(
+                this.config.replacedValue[i].newValue
+              );
+            }
+          } else if (this.config.replacedValue[i].operator === "!=") {
+            if (
+              this.group.controls[this.config.replacedValue[i].field].value !=
+              this.config.replacedValue[i].value
+            ) {
+              this.group.controls[this.config.replacedValue[i].field].setValue(
+                this.config.replacedValue[i].newValue
+              );
+            }
+          }
+        }
+      }
+    }
+  }
 }

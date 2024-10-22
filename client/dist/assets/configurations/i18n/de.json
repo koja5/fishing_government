@@ -96,9 +96,16 @@
       "alive": "Lebendig",
       "dead": "Tot",
       "chooseDropdownFilterOption": "Filtern Sie nach Region oder FBZ",
+      "chooseDropdownFilterOptionTitle": "Filtertyp",
+      "chooseDropdownFilterOptionExplanation": "Filtertyp.explanation",
       "chooseRegionPlaceholder": "Region",
-      "chooseFbzPlaceholder": "FBZ"
-   },
+      "chooseRegionTitle": "Filtern nach",
+      "chooseRegionExplanation": "Filtern nach.explanation",
+      "chooseFbzPlaceholder": "FBZ",
+      "chooseFbzTitle": "Filtern nach",
+      "search": "Suchen",
+      "searchExplanation": "Suchen.explanation"
+  },
    "userTypes": {
       "superadmin": "Superadmin",
       "admin": "Admin",
@@ -132,7 +139,7 @@
    },
    "navigations": {
       "allUsers": "Nutzer",
-      "allFsdOrgans": "Alle Inspektoren"
+      "allFsdOrgans": "Alle Aufsichtsorgane"
    },
    "navBar": {
       "profile": "Profil",
@@ -192,32 +199,40 @@
       "nachname": "Nachname",
       "vorname": "Vorname",
       "adresszusatz": "Adresszusatz",
-      "strabe": "Strabe",
+      "strabe": "Straße",
       "ort": "Ort",
       "geburtsdatum": "Geburtsdatum",
-      "telefonnummer": "Telefonnummer",
-      "telefonnummer2": "Telefonnummer2",
+      "telefonnummer": "Telefon 1",
+      "telefonnummer2": "Telefon 2",
       "mobil": "Mobil",
       "email": "Email",
       "sperre": "Sperre",
-      "todesfall": "Todesfall"
-   },
+      "todesfall": "Todesfall",
+      "exportBirthdayAndFortbildung": "Geburtstag und Fortbildung exportieren",
+      "exportPersonalInformationAndFortbildung": "Persönliche Informationen und Fortbildung exportieren",
+      "exportPersonalInformationAndFortbildungAndBestellungen": "Persönliche Informationen, Fortbildung und Bestimmungen exportieren"
+  },
    "fortbildungstermine": {
       "title": "Fortbildungstermine",
-      "fortbilfdungstermin": "Fortbilfdungstermin",
-      "FSDFBOrt": "FSDFBOrt",
+      "fortbilfdungstermin": "Fortbildungstermin",
+      "FSDFBOrt": "Ort der Fortbildung",
       "Teilnahme": "Teilnahme",
       "active": "Aktiv",
       "inactive": "Inaktiv"
    },
    "bestellungen": {
+      "title": "Bestellungen",
       "bescheidDatum": "Bescheid-Datum",
       "zahl": "Zahl",
       "bh": "BH",
       "fbz": "FBZ",
       "bezirk": "Bezirk",
+      "land": "Land",
       "dienstnummer": "Dienstnummer",
       "abzeichennummer": "Abzeichennummer",
-      "bestelltSeit": "Bestellt seit"
-   }
+      "bestelltSeit": "Bestellt seit",
+      "bezirkActive": "für gesamten Bezirk",
+      "landActive": "für gesamtes Land",
+      "abbestellung": "Abbestellung"
+  }
 }

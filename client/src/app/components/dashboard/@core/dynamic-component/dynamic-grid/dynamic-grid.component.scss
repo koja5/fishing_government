@@ -22,6 +22,16 @@
   .filter-container .free-search {
     padding-left: 5px;
   }
+
+  .export-custom-option {
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-top: 25px;
+  }
+
+  .region-filter .filter-search {
+    padding-left: 5px;
+  }
 }
 
 @media (max-width: 991px) {
@@ -35,11 +45,25 @@
   }
 
   .filter-container .free-search {
-    padding: 5px;
+    padding-top: 5px;
   }
 
   .region-filter ng-select {
     min-width: 50% !important;
+  }
+
+  .export-option {
+    text-align: end;
+    padding-top: 15px;
+  }
+
+  .export-option a {
+    padding: 0px;
+  }
+
+  .export-option .dropdown-item {
+    white-space: break-spaces;
+    padding: 10px;
   }
 }
 
@@ -156,7 +180,6 @@
 
 .region-filter ng-select {
   min-width: 200px;
-  padding: 5px;
 }
 
 .region-filter .select-region {

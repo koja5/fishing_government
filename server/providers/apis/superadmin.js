@@ -26,7 +26,6 @@ router.get("/", (req, res) => {
 //#region USERS
 
 router.get("/getAllUsers", auth, async (req, res, next) => {
-  console.log("TEST");
   try {
     connection.getConnection(function (err, conn) {
       if (err) {

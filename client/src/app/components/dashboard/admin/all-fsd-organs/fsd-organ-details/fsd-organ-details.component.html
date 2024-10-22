@@ -19,45 +19,44 @@
     </div>
     <div class="card col-12">
         <label>{{'fortbildungstermine.title' | translate}}</label>
-        <div *ngIf="fortbildungstermine && _helpService.isObjectEmpty(fortbildungstermine)" class="row p-2">
-            <div class="col-lg-4">
+        <div class="row p-2 border-bottom" *ngFor="let item of fortbildungstermine">
+            <div class="col-lg-6">
                 <div class="details">
                     <div class="icon">
                         <span class="fa fa-calendar"></span>
                     </div>
                     <div class="data">
-                        <h3>{{fortbildungstermine.fortbilfdungstermin | date: 'dd.MM.yyyy'}}</h3>
+                        <h3>{{item.fortbilfdungstermin | date: 'dd.MM.yyyy'}}</h3>
                         <h6>{{'fortbildungstermine.fortbilfdungstermin' | translate}}</h6>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <div class="details">
                     <div class="icon">
                         <span class="fa fa-map-marker"></span>
                     </div>
                     <div class="data">
-                        <h3>{{fortbildungstermine.fsdfb_ort}}</h3>
+                        <h3>{{item.fsdfb_ort}}</h3>
                         <h6>{{'fortbildungstermine.FSDFBOrt' | translate}}</h6>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <!-- <div class="col-lg-4">
                 <div class="details">
                     <div class="icon">
                         <span class="fa fa-info-circle"></span>
                     </div>
                     <div class="data">
-                        <h3
-                            class="status badge {{fortbildungstermine.teilnahme ? 'badge-light-success' : 'badge-light-danger'}}">
-                            {{fortbildungstermine.teilnahme ? ('fortbildungstermine.active' | translate) :
-                            ('fortbildungstermine.inactive' | translate)}}</h3>
+                        <h3 class="status badge {{item.teilnahme ? 'badge-light-danger' : 'badge-light-success'}}">
+                            {{item.teilnahme ? ('fortbildungstermine.inactive' | translate) :
+                            ('fortbildungstermine.active' | translate)}}</h3>
                         <h6>{{'fortbildungstermine.Teilnahme' | translate}}</h6>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
-        <div *ngIf="!fortbildungstermine || !_helpService.isObjectEmpty(fortbildungstermine) && !loader">
+        <div *ngIf="!fortbildungstermine || !fortbildungstermine.length && !loader">
             <app-no-data-content></app-no-data-content>
         </div>
     </div>

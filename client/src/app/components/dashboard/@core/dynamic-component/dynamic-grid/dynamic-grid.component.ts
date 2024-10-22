@@ -819,7 +819,10 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     );
     if (event === "Bezirksverwaltung") {
       this.resetFbzFilter();
+    } else if (event === "FBZ") {
+      this.resetRegionFilter();
     } else {
+      this.resetFbzFilter();
       this.resetRegionFilter();
     }
     this.filterData();
@@ -951,5 +954,70 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       return a.nachname.localeCompare(b.nachname);
     });
     return sortedData;
+  }
+
+  exportBirthdayAndFortbildung() {
+    this.loaderContent = true;
+    this._service
+      .callPostMethod("/api/admin/exportBirthdayAndFortbildung", this.rows)
+      .subscribe((data) => {
+        this.loaderContent = false;
+        this.downloadFile(data, "Geburtstag und Fortbildung");
+      });
+  }
+
+  exportAllPersonalInformationAndFortbildungen() {
+    this.loaderContent = true;
+    this._service
+      .callPostMethod(
+        "/api/admin/exportAllPersonalInformationAndFortbildungen",
+        this.rows
+      )
+      .subscribe((data) => {
+        this.loaderContent = false;
+        this.downloadFile(
+          data,
+          "Alle persönlichen Informationen und Fortbildungen"
+        );
+      });
+  }
+
+  exportAllPersonalInformationAndFortbildungenAndBestellungen() {
+    this.loaderContent = true;
+    this._service
+      .callPostMethod(
+        "/api/admin/exportAllPersonalInformationAndFortbildungenAndBestellungen",
+        this.rows
+      )
+      .subscribe((data) => {
+        this.loaderContent = false;
+        this.downloadFile(
+          data,
+          "Alle persönlichen Informationen, Fortbildungen und Bestellungen"
+        );
+      });
+  }
+
+  downloadFile(data: any, fileName?: string) {
+    const replacer = (key, value) => (value === null ? "" : value); // specify how you want to handle null values here
+    const header = Object.keys(data[0]);
+    let csv = data.map((row) =>
+      header
+        .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+        .join(",")
+    );
+    csv.unshift(header.join(","));
+    let csvArray = csv.join("\r\n");
+
+    var link = window.document.createElement("a");
+    link.setAttribute(
+      "href",
+      "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvArray)
+    );
+    link.setAttribute("download", fileName ?? "myFile.csv");
+    link.click();
+
+    // var blob = new Blob([csvArray], { type: "text/csv" });
+    // saveAs(blob, fileName ?? "myFile.csv");
   }
 }

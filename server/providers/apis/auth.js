@@ -73,8 +73,6 @@ router.post("/forgotPassword", function (req, res, next) {
       res.json(err);
     }
 
-    console.log("sammmm!");
-
     conn.query(
       "select * from users where email = ?",
       [req.body.data.email],
@@ -132,7 +130,7 @@ router.post("/resetPassword", function (req, res, next) {
     }
 
     conn.query(
-      "update users set password = ? where sha1(email) = ?",
+      "update users set password = ? where sha1(lower(email)) = ?",
       [sha1(req.body.password), req.body.email],
       function (err, rows, fields) {
         conn.release();
