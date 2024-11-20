@@ -114,6 +114,27 @@
                     </div>
                 </div>
 
+                <div *ngIf="config.advancedFilter" class="pl-1 advanced-filter">
+                    <a (click)="advancedFiltersVisibility = !advancedFiltersVisibility">
+                        <i class="fa fa-filter" aria-hidden="true"></i> {{'commonFields.advancedFilter' | translate}}
+                        <span *ngIf="searchTrainingValidValue.id != null">(1)</span>
+                    </a>
+                    <div *ngIf="advancedFiltersVisibility" class="d-flex align-items-center mt-1">
+                        <div>
+                            <ng-select [items]="allTrainingValidData" bindLabel="name" bindValue="id" class="training"
+                                [(ngModel)]="searchTrainingValidValue.id"
+                                [placeholder]="'commonFields.chooseTraingValidationPlaceholder' | translate"
+                                [searchable]="true" (change)="onChangeTraingValid($event)">
+                            </ng-select>
+                        </div>
+                        <div>
+                            <ejs-datetimepicker cssClass="e-outline" [(ngModel)]="searchTrainingValidDate"
+                                name="trainig-valid-date" [format]="'dd.MM.yyyy'"
+                                (change)="onChangeTraingValidDate($event)"></ejs-datetimepicker>
+                        </div>
+                    </div>
+                </div>
+
 
                 <app-no-data *ngIf="!rows || !rows.length"></app-no-data>
 

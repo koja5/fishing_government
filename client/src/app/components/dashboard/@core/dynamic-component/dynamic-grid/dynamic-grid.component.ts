@@ -140,10 +140,26 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     id: null,
     name: null,
   };
+  public searchTrainingValidValue = {
+    id: null,
+    name: null,
+  };
   public selectedDropdownFilter: string;
   public allFbz: any;
   public allRegions: any;
   public allDropdownFilterOptions = ["Bezirksverwaltung", "FBZ"];
+  public advancedFiltersVisibility = true;
+  public searchTrainingValidDate = new Date();
+  public allTrainingValidData = [
+    {
+      id: 0,
+      name: "Fortbildung nicht erfüllt",
+    },
+    {
+      id: 1,
+      name: "Fortbildung erfüllt",
+    },
+  ];
 
   //END SPECIAL VARIABLES
 
@@ -363,6 +379,9 @@ export class DynamicGridComponent implements CanComponentDeactivate {
 
       if (this.gridConfig.offset) {
         this.setPage(this.gridConfig);
+      }
+      if (this.gridConfig.training) {
+        this.searchTrainingValidValue = this.gridConfig.training;
       }
     }
 
@@ -873,6 +892,23 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     this.filterData();
   }
 
+  onChangeTraingValid(event: any) {
+    this._storageService.setTrainingValidForGrid(
+      window.location.pathname,
+      this.searchTrainingValidValue
+    );
+    this.filterData();
+  }
+
+  onChangeTraingValidDate(event: any) {
+    if (event && !event.value) {
+      this.searchTrainingValidDate = new Date();
+    }
+    setTimeout(() => {
+      this.filterData();
+    }, 100);
+  }
+
   resetFbzFilter() {
     this.searchFbzValue = {
       id: null,
@@ -894,7 +930,13 @@ export class DynamicGridComponent implements CanComponentDeactivate {
           "api/admin/filterFsdOrgan?bh=" +
             this.searchRegionValue.name +
             "&fbz=" +
-            this.searchFbzValue.name
+            this.searchFbzValue.name +
+            "&training=" +
+            this.searchTrainingValidValue.id +
+            "&date=" +
+            (this.searchTrainingValidDate
+              ? this.searchTrainingValidDate.toDateString()
+              : new Date().toDateString())
         )
         .subscribe((data: any) => {
           temp = data;

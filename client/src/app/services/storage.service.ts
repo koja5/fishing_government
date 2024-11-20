@@ -214,4 +214,14 @@ export class StorageService {
     }
     this.setLocalStorage(key, gridConfig);
   }
+
+  setTrainingValidForGrid(key: string, value: any) {
+    let gridConfig = this.getLocalStorage(key);
+    if (gridConfig) {
+      gridConfig["training"] = value;
+    } else {
+      gridConfig = { training: value };
+    }
+    this.setLocalStorage(key, gridConfig);
+  }
 }

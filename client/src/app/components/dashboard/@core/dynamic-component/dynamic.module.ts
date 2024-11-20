@@ -22,6 +22,7 @@ import { CustomCommonModule } from "../common/custom-common.module";
 import { ExportAsModule } from "ngx-export-as";
 import { UploaderComponent } from "./dynamic-forms/dynamic-fields/uploader/uploader.component";
 import { ProgressComponent } from "./dynamic-forms/dynamic-fields/uploader/progress/progress.component";
+import { DatePickerAllModule, DateTimePickerModule } from "@syncfusion/ej2-angular-calendars";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ProgressComponent } from "./dynamic-forms/dynamic-fields/uploader/progr
     RouterModule,
     ContentHeaderModule,
     CustomCommonModule,
-    ExportAsModule
+    ExportAsModule,
+    DateTimePickerModule
   ],
   providers: [ToastrComponent],
   exports: [

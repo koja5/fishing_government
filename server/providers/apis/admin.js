@@ -63,6 +63,10 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
         let query =
           " from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id ";
 
+        if (req.query.training) {
+          query += " join fortbildungstermine f on fo.fsd_id = f.fsd_id ";
+        }
+
         if (req.query.bh != "null" && req.query.fbz != "null") {
           query +=
             " join FBZ_linked_to_Bestellungen fbz_link on b.UniID = fbz_link.UniID_link";
@@ -84,9 +88,43 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
             " from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id";
         }
 
+        console.log(req.query);
+
+        if (req.query.training != "null") {
+          req.query.training = Number(req.query.training);
+          req.query.date = new Date(req.query.date).toISOString();
+          if (query.indexOf("where") != -1) {
+            if (req.query.training === 0) {
+              query +=
+                " and DATEDIFF('" +
+                req.query.date +
+                "', f.fortbilfdungstermin) / 365.0 > 10";
+            } else {
+              query +=
+                " and DATEDIFF('" +
+                req.query.date +
+                "', f.fortbilfdungstermin) / 365.0 <= 10";
+            }
+          } else {
+            if (req.query.training === 0) {
+              query +=
+                " and DATEDIFF('" +
+                req.query.date +
+                "', f.fortbilfdungstermin) / 365.0 > 10";
+            } else {
+              query += query +=
+                " and DATEDIFF('" +
+                req.query.date +
+                "', f.fortbilfdungstermin) / 365.0 <= 10";
+            }
+          }
+        }
+
         query = defaultSelection + query;
 
         query += " group by fo.fsd_id";
+
+        console.log(query);
 
         conn.query(query, function (err, rows, fields) {
           conn.release();

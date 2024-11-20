@@ -27,6 +27,7 @@
             "type": "Menu"
         }
     },
+    "advancedFilter": true,
     "formDialog": {
         "type": "sidebar",
         "closeAfterExecute": false,

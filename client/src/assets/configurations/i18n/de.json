@@ -102,10 +102,12 @@
       "chooseRegionTitle": "Filtern nach",
       "chooseRegionExplanation": "Filtern nach.explanation",
       "chooseFbzPlaceholder": "FBZ",
+      "chooseTraingValidationPlaceholder": "Training validation",
       "chooseFbzTitle": "Filtern nach",
       "search": "Suchen",
-      "searchExplanation": "Suchen.explanation"
-  },
+      "searchExplanation": "Suchen.explanation",
+      "advancedFilter": "Erweiterter Filter"
+   },
    "userTypes": {
       "superadmin": "Superadmin",
       "admin": "Admin",
@@ -211,7 +213,7 @@
       "exportBirthdayAndFortbildung": "Geburtstag und Fortbildung exportieren",
       "exportPersonalInformationAndFortbildung": "Persönliche Informationen und Fortbildung exportieren",
       "exportPersonalInformationAndFortbildungAndBestellungen": "Persönliche Informationen, Fortbildung und Bestimmungen exportieren"
-  },
+   },
    "fortbildungstermine": {
       "title": "Fortbildungstermine",
       "fortbilfdungstermin": "Fortbildungstermin",
@@ -234,5 +236,5 @@
       "bezirkActive": "für gesamten Bezirk",
       "landActive": "für gesamtes Land",
       "abbestellung": "Abbestellung"
-  }
+   }
 }

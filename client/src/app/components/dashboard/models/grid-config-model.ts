@@ -4,4 +4,5 @@ export class GridConfigModel {
   filterOption?: string;
   region?: any;
   fbz?: any;
+  training?: any;
 }
