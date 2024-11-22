@@ -117,7 +117,8 @@
                 <div *ngIf="config.advancedFilter" class="pl-1 advanced-filter">
                     <a (click)="advancedFiltersVisibility = !advancedFiltersVisibility">
                         <i class="fa fa-filter" aria-hidden="true"></i> {{'commonFields.advancedFilter' | translate}}
-                        <span *ngIf="searchTrainingValidValue.id != null">(1)</span>
+                        <span
+                            *ngIf="getNumberOfEnableAdditionalFilter()">({{getNumberOfEnableAdditionalFilter()}})</span>
                     </a>
                     <div *ngIf="advancedFiltersVisibility" class="d-flex align-items-center mt-1">
                         <div>
@@ -128,9 +129,16 @@
                             </ng-select>
                         </div>
                         <div>
-                            <ejs-datetimepicker cssClass="e-outline" [(ngModel)]="searchTrainingValidDate"
-                                name="trainig-valid-date" [format]="'dd.MM.yyyy'"
+                            <ejs-datetimepicker cssClass="e-outline" class="training-valid-date"
+                                [(ngModel)]="searchTrainingValidDate" name="trainig-valid-date" [format]="'dd.MM.yyyy'"
                                 (change)="onChangeTraingValidDate($event)"></ejs-datetimepicker>
+                        </div>
+                        <div class="pl-1">
+                            <ng-select [items]="allValidCardData" bindLabel="name" bindValue="id" class="valid-card"
+                                [(ngModel)]="searchValidCardValue.id"
+                                [placeholder]="'commonFields.chooseValidCardPlaceholder' | translate"
+                                [searchable]="true" (change)="onChangeValidCard($event)">
+                            </ng-select>
                         </div>
                     </div>
                 </div>

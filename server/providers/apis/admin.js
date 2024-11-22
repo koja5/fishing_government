@@ -61,10 +61,17 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
         let defaultSelection = "select distinct fo.*, b.bh";
 
         let query =
-          " from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id ";
+          " from fsd_organs fo inner join bestellungen b on fo.fsd_id = b.fsd_id ";
 
-        if (req.query.training) {
-          query += " join fortbildungstermine f on fo.fsd_id = f.fsd_id ";
+        if (req.query.training != "null") {
+          defaultSelection += ", f.fortbilfdungstermin, f.fsd_id ";
+          query +=
+            " join (select f1.fsd_id, max(fortbilfdungstermin) as 'fortbilfdungstermin' from fortbildungstermine f1 group by f1.fsd_id union select f.fsd_id, null as 'fortbilfdungstermin' from fsd_organs f left join fortbildungstermine fo on f.fsd_id = fo.fsd_id where fo.fsd_id is null and fo.fortbilfdungstermin is NULL) f on fo.fsd_id = f.fsd_id ";
+        }
+
+        if (req.query.validCard != "null") {
+          defaultSelection += ", ja.JFK_Year ",
+          query += " join Jahresfischerkarten ja on fo.fsd_id = ja.FSD_ID ";
         }
 
         if (req.query.bh != "null" && req.query.fbz != "null") {
@@ -83,22 +90,23 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
           query +=
             " join FBZ_linked_to_Bestellungen fbz_link on b.UniID = fbz_link.UniID_link";
           query += " where fbz_link.FBZ = '" + req.query.fbz + "'";
-        } else {
-          query =
-            " from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id";
         }
+        // else {
+        //   query =
+        //     " from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id";
+        // }
 
-        console.log(req.query);
 
         if (req.query.training != "null") {
           req.query.training = Number(req.query.training);
           req.query.date = new Date(req.query.date).toISOString();
-          if (query.indexOf("where") != -1) {
+          console.log(query.split("where").length);
+          if (query.split("where").length - 1 == 2) {
             if (req.query.training === 0) {
               query +=
                 " and DATEDIFF('" +
                 req.query.date +
-                "', f.fortbilfdungstermin) / 365.0 > 10";
+                "', f.fortbilfdungstermin) / 365.0 > 10 or f.fortbilfdungstermin is NULL";
             } else {
               query +=
                 " and DATEDIFF('" +
@@ -108,25 +116,49 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
           } else {
             if (req.query.training === 0) {
               query +=
-                " and DATEDIFF('" +
+                " where DATEDIFF('" +
                 req.query.date +
-                "', f.fortbilfdungstermin) / 365.0 > 10";
+                "', f.fortbilfdungstermin) / 365.0 > 10 or f.fortbilfdungstermin is NULL";
             } else {
-              query += query +=
-                " and DATEDIFF('" +
+              query +=
+                " where DATEDIFF('" +
                 req.query.date +
                 "', f.fortbilfdungstermin) / 365.0 <= 10";
             }
           }
         }
 
-        query = defaultSelection + query;
+        if (req.query.validCard != "null") {
+          console.log(query);
+          console.log("-----------------");
+          req.query.validCard = Number(req.query.validCard);
+          console.log(query.split("where").length);
+          if (
+            (req.query.training != "null" &&
+              query.split("where").length - 1 == 2) ||
+            query.split("where").length - 1 == 1
+          ) {
+            if (req.query.validCard === 0) {
+              query += " and ja.JFK_Year != " + new Date().getFullYear();
+            } else {
+              query += " and ja.JFK_Year = " + new Date().getFullYear();
+            }
+          } else {
+            if (req.query.validCard === 0) {
+              query += " where ja.JFK_Year != " + new Date().getFullYear();
+            } else {
+              query += " where ja.JFK_Year = " + new Date().getFullYear();
+            }
+          }
+        }
 
-        query += " group by fo.fsd_id";
+        let finalQuery = defaultSelection + query;
 
-        console.log(query);
+        finalQuery += " group by fo.fsd_id";
 
-        conn.query(query, function (err, rows, fields) {
+        console.log(finalQuery);
+
+        conn.query(finalQuery, function (err, rows, fields) {
           conn.release();
           if (err) {
             logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -157,8 +189,6 @@ router.post("/exportBirthdayAndFortbildung", auth, async (req, res, next) => {
             whereQuery += " or ";
           }
         }
-
-        console.log(whereQuery);
 
         conn.query(
           "select DATE_FORMAT(fo.geburtsdatum, '%d.%m.%Y') as 'geburtsdatum', fort.*,  DATE_FORMAT(fort.fortbilfdungstermin, '%d.%m.%Y') as 'fortbilfdungstermin' from fsd_organs fo join fortbildungstermine fort on fo.fsd_id = fort.fsd_id where " +
@@ -199,8 +229,6 @@ router.post(
             }
           }
 
-          console.log(whereQuery);
-
           conn.query(
             "select fo.*, DATE_FORMAT(fo.geburtsdatum, '%d.%m.%Y') as 'geburtsdatum', fort.*, DATE_FORMAT(fort.fortbilfdungstermin, '%d.%m.%Y') as 'fortbilfdungstermin' from fsd_organs fo join fortbildungstermine fort on fo.fsd_id = fort.fsd_id where " +
               whereQuery,
@@ -240,8 +268,6 @@ router.post(
               whereQuery += " or ";
             }
           }
-
-          console.log(whereQuery);
 
           conn.query(
             "select fo.*, DATE_FORMAT(fo.geburtsdatum, '%d.%m.%Y') as 'geburtsdatum', fort.*, DATE_FORMAT(fort.fortbilfdungstermin, '%d.%m.%Y') as 'fortbilfdungstermin', be.*, DATE_FORMAT(be.bescheid_datum, '%d.%m.%Y') as 'bescheid_datum', DATE_FORMAT(be.bestellt_seit, '%d.%m.%Y') as 'bestellt_seit', DATE_FORMAT(be.Abbestellung, '%d.%m.%Y') as 'Abbestellung' from fsd_organs fo join fortbildungstermine fort on fo.fsd_id = fort.fsd_id join bestellungen be on fo.fsd_id = be.fsd_id where " +

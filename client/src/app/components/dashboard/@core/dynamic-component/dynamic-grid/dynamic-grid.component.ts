@@ -144,6 +144,10 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     id: null,
     name: null,
   };
+  public searchValidCardValue = {
+    id: null,
+    name: null,
+  };
   public selectedDropdownFilter: string;
   public allFbz: any;
   public allRegions: any;
@@ -158,6 +162,17 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     {
       id: 1,
       name: "Fortbildung erfüllt",
+    },
+  ];
+
+  public allValidCardData = [
+    {
+      id: 0,
+      name: "keine gültige Jahresfischerkarte",
+    },
+    {
+      id: 1,
+      name: "Gültige Jahresfischerkarte",
     },
   ];
 
@@ -217,14 +232,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   }
 
   setPage(event) {
-    console.log(event);
-    if (!this.gridConfig && this.gridConfig != null) {
-      this.gridConfig.offset = event.offset;
-    } else {
-      this.gridConfig = {
-        offset: event.offset,
-      };
-    }
+    this.gridConfig.offset = event.offset;
     this._storageService.setOffsetForGrid(
       window.location.pathname,
       event.offset
@@ -382,6 +390,12 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       }
       if (this.gridConfig.training) {
         this.searchTrainingValidValue = this.gridConfig.training;
+      }
+      if (this.gridConfig.date) {
+        this.searchTrainingValidDate = this.gridConfig.date;
+      }
+      if (this.gridConfig.validCard) {
+        this.searchValidCardValue = this.gridConfig.validCard;
       }
     }
 
@@ -903,10 +917,24 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   onChangeTraingValidDate(event: any) {
     if (event && !event.value) {
       this.searchTrainingValidDate = new Date();
+    } else {
+      this.searchTrainingValidDate = event.value;
     }
+    this._storageService.setTrainingValidDateForGrid(
+      window.location.pathname,
+      this.searchTrainingValidDate
+    );
     setTimeout(() => {
       this.filterData();
     }, 100);
+  }
+
+  onChangeValidCard(event: any) {
+    this._storageService.setValidCardForGrid(
+      window.location.pathname,
+      this.searchValidCardValue
+    );
+    this.filterData();
   }
 
   resetFbzFilter() {
@@ -935,8 +963,10 @@ export class DynamicGridComponent implements CanComponentDeactivate {
             this.searchTrainingValidValue.id +
             "&date=" +
             (this.searchTrainingValidDate
-              ? this.searchTrainingValidDate.toDateString()
-              : new Date().toDateString())
+              ? this.searchTrainingValidDate
+              : new Date().toDateString()) +
+            "&validCard=" +
+            this.searchValidCardValue.id
         )
         .subscribe((data: any) => {
           temp = data;
@@ -1061,5 +1091,17 @@ export class DynamicGridComponent implements CanComponentDeactivate {
 
     // var blob = new Blob([csvArray], { type: "text/csv" });
     // saveAs(blob, fileName ?? "myFile.csv");
+  }
+
+  getNumberOfEnableAdditionalFilter() {
+    let count = 0;
+    if (this.searchTrainingValidValue.id != null) {
+      count++;
+    }
+    if (this.searchValidCardValue.id != null) {
+      count++;
+    }
+
+    return count;
   }
 }

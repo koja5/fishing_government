@@ -5,4 +5,6 @@ export class GridConfigModel {
   region?: any;
   fbz?: any;
   training?: any;
+  date?: any;
+  validCard: any;
 }

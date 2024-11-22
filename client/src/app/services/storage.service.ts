@@ -224,4 +224,24 @@ export class StorageService {
     }
     this.setLocalStorage(key, gridConfig);
   }
+
+  setTrainingValidDateForGrid(key: string, value: any) {
+    let gridConfig = this.getLocalStorage(key);
+    if (gridConfig) {
+      gridConfig["date"] = value;
+    } else {
+      gridConfig = { date: value };
+    }
+    this.setLocalStorage(key, gridConfig);
+  }
+
+  setValidCardForGrid(key: string, value: any) {
+    let gridConfig = this.getLocalStorage(key);
+    if (gridConfig) {
+      gridConfig["validCard"] = value;
+    } else {
+      gridConfig = { validCard: value };
+    }
+    this.setLocalStorage(key, gridConfig);
+  }
 }
