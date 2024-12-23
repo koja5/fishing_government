@@ -162,6 +162,11 @@
   border-color: 1px solid #d8d6de !important;
 }
 
+.e-outline.e-input-group .e-input-group-icon,
+.e-outline.e-input-group.e-control-wrapper .e-input-group-icon {
+  margin: 9px 12px 9px 0 !important;
+}
+
 .badge {
   white-space: break-spaces;
 }

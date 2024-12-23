@@ -32,6 +32,30 @@
   .region-filter .filter-search {
     padding-left: 5px;
   }
+
+  .region-filter .select-region,
+  .region-filter ng-select {
+    min-width: 330px;
+  }
+
+  .advanced-filter {
+    padding: 15px;
+  }
+
+  .advanced-filter-option {
+    display: flex;
+    justify-content: start;
+    margin-top: 10px;
+  }
+
+  .advanced-filter ng-select,
+  .training-valid-date-container {
+    margin-right: 5px;
+  }
+
+  // .advanced-filter-option div {
+  //   margin-right: 5px;
+  // }
 }
 
 @media (max-width: 991px) {
@@ -64,6 +88,10 @@
   .export-option .dropdown-item {
     white-space: break-spaces;
     padding: 10px;
+  }
+
+  .advanced-filter {
+    margin: 0px 15px 10px;
   }
 }
 
@@ -178,18 +206,6 @@
   display: flex;
 }
 
-.region-filter ng-select {
-  min-width: 200px;
-}
-
-.region-filter .select-region {
-  min-width: 330px !important;
-}
-
-.advanced-filter {
-  margin: -5px 5px 10px;
-}
-
 .advanced-filter a {
   color: #002984 !important;
   padding-top: 5px;
@@ -198,7 +214,6 @@
 
 .advanced-filter ng-select {
   min-width: 240px;
-  margin-right: 10px;
   min-height: 39px;
 }
 

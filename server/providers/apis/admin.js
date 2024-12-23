@@ -64,14 +64,18 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
           " from fsd_organs fo inner join bestellungen b on fo.fsd_id = b.fsd_id ";
 
         if (req.query.training != "null") {
-          defaultSelection += ", f.fortbilfdungstermin, f.fsd_id ";
+          defaultSelection +=
+            ", f.min_bescheid_datum, f.max_bescheid_datum, fort.min_fortbilfdungstermin, fort.max_fortbilfdungstermin, f.fsd_id ";
           query +=
-            " join (select f1.fsd_id, max(fortbilfdungstermin) as 'fortbilfdungstermin' from fortbildungstermine f1 group by f1.fsd_id union select f.fsd_id, null as 'fortbilfdungstermin' from fsd_organs f left join fortbildungstermine fo on f.fsd_id = fo.fsd_id where fo.fsd_id is null and fo.fortbilfdungstermin is NULL) f on fo.fsd_id = f.fsd_id ";
+            " join (select f1.fsd_id, min(bescheid_datum) as 'min_bescheid_datum', max(bescheid_datum) as 'max_bescheid_datum' from bestellungen f1 group by f1.fsd_id union select f.fsd_id, null as 'min_bescheid_datum', null as 'max_bescheid_datum' from fsd_organs f left join bestellungen fo on f.fsd_id = fo.fsd_id where fo.fsd_id is null and fo.bescheid_datum is NULL) f on fo.fsd_id = f.fsd_id ";
+          query +=
+            " join (select f1.fsd_id, min(fortbilfdungstermin) as 'min_fortbilfdungstermin', max(fortbilfdungstermin) as 'max_fortbilfdungstermin' from fortbildungstermine f1 group by f1.fsd_id union select f.fsd_id, null as 'min_fortbilfdungstermin', null as 'max_fortbilfdungstermin' from fsd_organs f left join fortbildungstermine fo on f.fsd_id = fo.fsd_id where fo.fsd_id is null and fo.fortbilfdungstermin is NULL) fort on fo.fsd_id = fort.fsd_id ";
         }
 
         if (req.query.validCard != "null") {
-          defaultSelection += ", ja.JFK_Year ",
-          query += " join Jahresfischerkarten ja on fo.fsd_id = ja.FSD_ID ";
+          (defaultSelection += ", ja.JFK_Year"),
+            (query +=
+              " join (select fsd_id, max(JFK_Year) as 'JFK_Year' from Jahresfischerkarten group by FSD_ID) as ja on fo.fsd_id = ja.FSD_ID ");
         }
 
         if (req.query.bh != "null" && req.query.fbz != "null") {
@@ -96,58 +100,81 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
         //     " from fsd_organs fo join bestellungen b on fo.fsd_id = b.fsd_id";
         // }
 
-
         if (req.query.training != "null") {
           req.query.training = Number(req.query.training);
           req.query.date = new Date(req.query.date).toISOString();
-          console.log(query.split("where").length);
-          if (query.split("where").length - 1 == 2) {
+          if (query.split("where").length - 1 === 3) {
             if (req.query.training === 0) {
               query +=
-                " and DATEDIFF('" +
+                " and (DATEDIFF('" +
                 req.query.date +
-                "', f.fortbilfdungstermin) / 365.0 > 10 or f.fortbilfdungstermin is NULL";
+                "', fort.max_fortbilfdungstermin) / 365.0 > 10 OR DATEDIFF('" +
+                req.query.date +
+                "', fort.max_fortbilfdungstermin) is NULL) AND (DATEDIFF('" +
+                req.query.date +
+                "', f.min_bescheid_datum) / 365.0 > 10 or DATEDIFF('" +
+                req.query.date +
+                "', f.min_bescheid_datum) is NULL)";
             } else {
               query +=
-                " and DATEDIFF('" +
+                " and (DATEDIFF('" +
                 req.query.date +
-                "', f.fortbilfdungstermin) / 365.0 <= 10";
+                "', f.min_bescheid_datum) / 365.0 <= 10 OR " +
+                "DATEDIFF('" +
+                req.query.date +
+                "', fort.max_fortbilfdungstermin) / 365.0 <= 10)";
             }
           } else {
             if (req.query.training === 0) {
               query +=
-                " where DATEDIFF('" +
+                " where  (DATEDIFF('" +
                 req.query.date +
-                "', f.fortbilfdungstermin) / 365.0 > 10 or f.fortbilfdungstermin is NULL";
+                "', fort.max_fortbilfdungstermin) / 365.0 > 10 OR DATEDIFF('" +
+                req.query.date +
+                "', fort.max_fortbilfdungstermin) is NULL) AND (DATEDIFF('" +
+                req.query.date +
+                "', f.min_bescheid_datum) / 365.0 > 10 or DATEDIFF('" +
+                req.query.date +
+                "', f.min_bescheid_datum) is NULL)";
             } else {
               query +=
-                " where DATEDIFF('" +
+                " where (DATEDIFF('" +
                 req.query.date +
-                "', f.fortbilfdungstermin) / 365.0 <= 10";
+                "', f.min_bescheid_datum) / 365.0 <= 10 OR " +
+                "DATEDIFF('" +
+                req.query.date +
+                "', fort.max_fortbilfdungstermin) / 365.0 <= 10)";
             }
           }
         }
 
+        // console.log(query.split("where").length);
+
         if (req.query.validCard != "null") {
-          console.log(query);
-          console.log("-----------------");
           req.query.validCard = Number(req.query.validCard);
-          console.log(query.split("where").length);
           if (
             (req.query.training != "null" &&
-              query.split("where").length - 1 == 2) ||
+              query.split("where").length - 1 === 3) ||
             query.split("where").length - 1 == 1
           ) {
             if (req.query.validCard === 0) {
-              query += " and ja.JFK_Year != " + new Date().getFullYear();
+              query +=
+                " and ja.JFK_Year < " +
+                new Date(req.query.date).getFullYear();
             } else {
-              query += " and ja.JFK_Year = " + new Date().getFullYear();
+              query +=
+                " and ja.JFK_Year >= " +
+                new Date(req.query.date).getFullYear();
             }
           } else {
             if (req.query.validCard === 0) {
-              query += " where ja.JFK_Year != " + new Date().getFullYear();
+              query +=
+                " where ja.JFK_Year < " +
+                new Date(req.query.date).getFullYear();
             } else {
-              query += " where ja.JFK_Year = " + new Date().getFullYear();
+              query +=
+                " where ja.JFK_Year >= " +
+                new Date(req.query.date).getFullYear();
             }
           }
         }
@@ -415,6 +442,34 @@ router.get("/getAllFbz", auth, async (req, res, next) => {
             res.json(rows);
           }
         });
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getAllJahresfischerkarten/:id", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from Jahresfischerkarten where fsd_id = ?",
+          [req.params.id],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
       }
     });
   } catch (ex) {

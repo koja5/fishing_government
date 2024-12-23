@@ -32,6 +32,9 @@
         "closeAfterExecute": false,
         "size": "lg"
     },
+    "export": {
+        "csv": false
+    },
     "customGrouping": false,
     "allowResizing": true,
     "reorderable": true,

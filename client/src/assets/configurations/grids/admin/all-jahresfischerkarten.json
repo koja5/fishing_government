@@ -1,0 +1,100 @@
+{
+    "pageSize": 10,
+    "request": {
+        "type": "GET",
+        "api": "/api/admin/getAllJahresfischerkarten",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "paging": {
+        "enable": true,
+        "settings": {
+            "pageSizes": true,
+            "pageSize": 20
+        }
+    },
+    "sorting": {
+        "enable": true,
+        "fields": [
+            {
+                "prop": "JFK_Date",
+                "dir": "desc"
+            }
+        ]
+    },
+    "grouping": {
+        "enable": true,
+        "group": []
+    },
+    "filtering": {
+        "enable": true,
+        "settings": {
+            "type": "Menu"
+        }
+    },
+    "formDialog": {
+        "type": "sidebar",
+        "closeAfterExecute": false,
+        "size": "lg"
+    },
+    "export": {
+        "csv": false
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "disableCreateNewRow": true,
+    "editSettings": {
+        "allowEditing": true,
+        "allowAdding": true,
+        "allowDeleting": true,
+        "showDeleteConfirmDialog": true,
+        "mode": "Dialog"
+    },
+    "columns": [
+        {
+            "title": "jahresfischerkarten.year",
+            "filterable": true,
+            "hideable": true,
+            "filter": "string",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "JFK_Year",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "jahresfischerkarten.date",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "date",
+            "format": "dd.MM.yyyy",
+            "class": "text-align-right",
+            "field": "JFK_Date",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "jahresfischerkarten.uid",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "uid",
+            "validation": {
+                "required": true
+            }
+        }
+    ],
+    "config": []
+}

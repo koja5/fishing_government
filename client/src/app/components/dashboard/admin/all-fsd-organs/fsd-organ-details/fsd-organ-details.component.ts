@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { HelpService } from "app/services/help.service";
 import { FsdOrganModel } from "../../models/fsd-organ-model";
 import { BestellungenModel } from "../../models/bestellungen-model";
+import { JahresfischerkartenModel } from "../../models/jahresfischerkarten-model";
 
 @Component({
   selector: "app-fsd-organ-details",
@@ -15,9 +16,13 @@ export class FsdOrganDetailsComponent {
   public path = "grids/admin";
   public file = "all-bestellungen.json";
 
+  public pathForJahresfischerkarten = "grids/admin";
+  public fileForJahresfischerkarten = "all-jahresfischerkarten.json";
+
   public fortbildungstermine = new FortbildungstermineModel();
   public fsdOrgan = new FsdOrganModel();
   public allBestellungen: BestellungenModel[];
+  public allJahresfischerkarten: JahresfischerkartenModel[];
   public loader = true;
 
   constructor(
@@ -30,6 +35,7 @@ export class FsdOrganDetailsComponent {
     this.getFortbildungstermine();
     this.getFsdOrgan();
     this.getAllBestellungen();
+    this.getAllJahresfischerkarten();
   }
 
   getFsdOrgan() {
@@ -66,6 +72,17 @@ export class FsdOrganDetailsComponent {
       )
       .subscribe((data: BestellungenModel[]) => {
         this.allBestellungen = data;
+      });
+  }
+
+  getAllJahresfischerkarten() {
+    this._service
+      .callGetMethod(
+        "api/admin/getAllJahresfischerkarten",
+        this._activatedRouter.snapshot.queryParams.fsd_id
+      )
+      .subscribe((data: JahresfischerkartenModel[]) => {
+        this.allJahresfischerkarten = data;
       });
   }
 }

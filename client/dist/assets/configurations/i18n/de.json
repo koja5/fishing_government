@@ -102,12 +102,18 @@
       "chooseRegionTitle": "Filtern nach",
       "chooseRegionExplanation": "Filtern nach.explanation",
       "chooseFbzPlaceholder": "FBZ",
+      "chooseTraingValidation": "Training validation",
+      "chooseTraingValidationExplanation": "",
       "chooseTraingValidationPlaceholder": "Training validation",
+      "chooseValidCard": "Gültige Karte",
+      "chooseValidCardExplanation": "",
       "chooseValidCardPlaceholder": "Gültige Karte",
       "chooseFbzTitle": "Filtern nach",
       "search": "Suchen",
       "searchExplanation": "Suchen.explanation",
-      "advancedFilter": "Erweiterter Filter"
+      "advancedFilter": "Erweiterter Filter",
+      "chooseTrainingValidDate": "Gültiges Datum",
+      "chooseTrainingValidDateExplanation": ""
    },
    "userTypes": {
       "superadmin": "Superadmin",
@@ -237,5 +243,12 @@
       "bezirkActive": "für gesamten Bezirk",
       "landActive": "für gesamtes Land",
       "abbestellung": "Abbestellung"
+   },
+   "jahresfischerkarten": {
+      "title": "Jahresfischerkarten",
+      "fsd": "FSD ID",
+      "year": "Year",
+      "date": "Date",
+      "uid": "UID"
    }
 }

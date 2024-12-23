@@ -66,4 +66,10 @@
         <app-dynamic-grid *ngIf="allBestellungen" #grid [path]="path" [file]="file" [data]="allBestellungen"
             [height]="'auto'"></app-dynamic-grid>
     </div>
+
+    <div class="card col-12">
+        <label>{{'jahresfischerkarten.title' | translate}}</label>
+        <app-dynamic-grid *ngIf="allJahresfischerkarten" #grid [path]="pathForJahresfischerkarten"
+            [file]="fileForJahresfischerkarten" [data]="allJahresfischerkarten" [height]="'auto'"></app-dynamic-grid>
+    </div>
 </div>

@@ -89,7 +89,7 @@
                             (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" placeholder="{{'general.searchFilter' |
                                 translate}}" />
                     </div>
-                    <div class="export-option">
+                    <div class="export-option" *ngIf="!config.export || (config.export && config.export.csv)">
                         <li ngbDropdown class="nav-item dropdown-user" style="list-style-type: none;">
                             <a class="nav-link dropdown-toggle export-custom-option" id="dropdown-user"
                                 ngbDropdownToggle id="navbarUserDropdown" aria-haspopup="true" aria-expanded="false">
@@ -114,26 +114,32 @@
                     </div>
                 </div>
 
-                <div *ngIf="config.advancedFilter" class="pl-1 advanced-filter">
+                <div *ngIf="config.advancedFilter" class="advanced-filter">
                     <a (click)="advancedFiltersVisibility = !advancedFiltersVisibility">
                         <i class="fa fa-filter" aria-hidden="true"></i> {{'commonFields.advancedFilter' | translate}}
                         <span
                             *ngIf="getNumberOfEnableAdditionalFilter()">({{getNumberOfEnableAdditionalFilter()}})</span>
                     </a>
-                    <div *ngIf="advancedFiltersVisibility" class="d-flex align-items-center mt-1">
+                    <div *ngIf="advancedFiltersVisibility" class="advanced-filter-option">
                         <div>
+                            <label>{{'commonFields.chooseTraingValidation' | translate}} <app-explanation-mark
+                                    [explanation]="('commonFields.chooseTraingValidationExplanation' | translate)"></app-explanation-mark></label>
                             <ng-select [items]="allTrainingValidData" bindLabel="name" bindValue="id" class="training"
                                 [(ngModel)]="searchTrainingValidValue.id"
                                 [placeholder]="'commonFields.chooseTraingValidationPlaceholder' | translate"
                                 [searchable]="true" (change)="onChangeTraingValid($event)">
                             </ng-select>
                         </div>
-                        <div>
+                        <div class="training-valid-date-container">
+                            <label>{{'commonFields.chooseTrainingValidDate' | translate}} <app-explanation-mark
+                                    [explanation]="('commonFields.chooseTrainingValidDateExplanation' | translate)"></app-explanation-mark></label>
                             <ejs-datetimepicker cssClass="e-outline" class="training-valid-date"
                                 [(ngModel)]="searchTrainingValidDate" name="trainig-valid-date" [format]="'dd.MM.yyyy'"
                                 (change)="onChangeTraingValidDate($event)"></ejs-datetimepicker>
                         </div>
-                        <div class="pl-1">
+                        <div>
+                            <label>{{'commonFields.chooseValidCard' | translate}} <app-explanation-mark
+                                    [explanation]="('commonFields.chooseValidCardExplanation' | translate)"></app-explanation-mark></label>
                             <ng-select [items]="allValidCardData" bindLabel="name" bindValue="id" class="valid-card"
                                 [(ngModel)]="searchValidCardValue.id"
                                 [placeholder]="'commonFields.chooseValidCardPlaceholder' | translate"
@@ -314,14 +320,6 @@
                                                 (click)="actionColumn(item, value, row)" ngbDropdownItem><span
                                                     [data-feather]="item.icon" [size]="16" [class]="'mr-50'"></span>
                                                 {{item.actionName | translate}}</a>
-
-                                            <!-- <a routerLink="/apps/user/user-view/{{ value }}" ngbDropdownItem><span
-                                                    [data-feather]="'file-text'" [size]="16" [class]="'mr-50'"></span>
-                                                Details</a><a routerLink="/apps/user/user-edit/{{ value }}"
-                                                ngbDropdownItem><span [data-feather]="'edit'" [size]="16"
-                                                    [class]="'mr-50'"></span> Edit</a><a href="javascript:;"
-                                                ngbDropdownItem><span [data-feather]="'trash'" [size]="16"
-                                                    [class]="'mr-50'"></span> Delete</a> -->
                                         </div>
                                     </div>
                                     <div *ngIf="item.template.actionMode.type === 'button'">
