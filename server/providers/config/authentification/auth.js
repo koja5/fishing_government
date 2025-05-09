@@ -35,7 +35,8 @@ const verifyToken = (req, res, next) => {
     req.user = decoded;
   } catch (err) {
     res.clearCookie("token");
-    return res.status(401).send("Invalid Token");
+    // return res.status(401).send("Invalid Token");
+    res.redirect("/auth/login");
   }
   return next();
 };

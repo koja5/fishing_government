@@ -219,7 +219,8 @@
       "todesfall": "Todesfall",
       "exportBirthdayAndFortbildung": "Geburtstag und Fortbildung exportieren",
       "exportPersonalInformationAndFortbildung": "Persönliche Informationen und Fortbildung exportieren",
-      "exportPersonalInformationAndFortbildungAndBestellungen": "Persönliche Informationen, Fortbildung und Bestimmungen exportieren"
+      "exportPersonalInformationAndFortbildungAndBestellungen": "Persönliche Informationen, Fortbildung und Bestimmungen exportieren",
+      "forWholeArea": "für gesamten Bezirk"
    },
    "fortbildungstermine": {
       "title": "Fortbildungstermine",

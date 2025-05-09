@@ -170,3 +170,13 @@
 .badge {
   white-space: break-spaces;
 }
+
+.e-datetime-wrapper .e-input-group-icon.e-date-icon,
+.e-datetime-wrapper .e-input-group-icon.e-time-icon {
+  color: #002984 !important;
+}
+
+.e-datetimepicker.e-popup {
+  color: #002984 !important;
+  background: red($color: #000000);
+}

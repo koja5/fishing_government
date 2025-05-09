@@ -154,6 +154,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   public allDropdownFilterOptions = ["Bezirksverwaltung", "FBZ"];
   public advancedFiltersVisibility = true;
   public searchTrainingValidDate = new Date();
+  public searchWholeArea = false;
   public allTrainingValidData = [
     {
       id: 0,
@@ -937,6 +938,14 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     this.filterData();
   }
 
+  onChangeWholeArea(event: any) {
+    this._storageService.setWholeAreaForGrid(
+      window.location.pathname,
+      this.searchWholeArea
+    );
+    this.filterData();
+  }
+
   resetFbzFilter() {
     this.searchFbzValue = {
       id: null,
@@ -966,7 +975,9 @@ export class DynamicGridComponent implements CanComponentDeactivate {
               ? this.searchTrainingValidDate
               : new Date().toDateString()) +
             "&validCard=" +
-            this.searchValidCardValue.id
+            this.searchValidCardValue.id +
+            "&wholeArea=" +
+            this.searchWholeArea
         )
         .subscribe((data: any) => {
           temp = data;

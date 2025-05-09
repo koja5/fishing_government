@@ -37,10 +37,12 @@ const verifyToken = (req, res, next) => {
     if (req.user.user.type != 0) {
       // res.clearCookie("token");
       return res.status(401).send("Invalid Token");
+      // res.redirect("/auth/login");
     }
   } catch (err) {
     // res.clearCookie("token");
     return res.status(401).send("Invalid Token");
+    // res.redirect("/auth/login");
   }
   return next();
 };

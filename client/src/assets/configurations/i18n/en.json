@@ -225,7 +225,8 @@
         "mobil": "Mobil",
         "email": "Email",
         "sperre": "Sperre",
-        "todesfall": "Todesfall"
+        "todesfall": "Todesfall",
+        "forWholeArea": "For whole area"
     },
     "fortbildungstermine": {
         "title": "Fortbildungstermine",

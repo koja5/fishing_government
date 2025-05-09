@@ -137,7 +137,7 @@
                                 [(ngModel)]="searchTrainingValidDate" name="trainig-valid-date" [format]="'dd.MM.yyyy'"
                                 (change)="onChangeTraingValidDate($event)"></ejs-datetimepicker>
                         </div>
-                        <div>
+                        <div class="mr-1">
                             <label>{{'commonFields.chooseValidCard' | translate}} <app-explanation-mark
                                     [explanation]="('commonFields.chooseValidCardExplanation' | translate)"></app-explanation-mark></label>
                             <ng-select [items]="allValidCardData" bindLabel="name" bindValue="id" class="valid-card"
@@ -145,6 +145,10 @@
                                 [placeholder]="'commonFields.chooseValidCardPlaceholder' | translate"
                                 [searchable]="true" (change)="onChangeValidCard($event)">
                             </ng-select>
+                        </div>
+                        <div class="check-box-container">
+                            <input class="styled-checkbox" id="whole-area" type="checkbox" [(ngModel)]="searchWholeArea" (change)="onChangeWholeArea($event)">
+                            <label for="whole-area">{{'fsdOrgan.forWholeArea' | translate}}</label>
                         </div>
                     </div>
                 </div>

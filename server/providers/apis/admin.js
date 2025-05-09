@@ -159,12 +159,10 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
           ) {
             if (req.query.validCard === 0) {
               query +=
-                " and ja.JFK_Year < " +
-                new Date(req.query.date).getFullYear();
+                " and ja.JFK_Year < " + new Date(req.query.date).getFullYear();
             } else {
               query +=
-                " and ja.JFK_Year >= " +
-                new Date(req.query.date).getFullYear();
+                " and ja.JFK_Year >= " + new Date(req.query.date).getFullYear();
             }
           } else {
             if (req.query.validCard === 0) {
@@ -179,11 +177,21 @@ router.get("/filterFsdOrgan", auth, async (req, res, next) => {
           }
         }
 
+        if (req.query.wholeArea === 'true') {
+          req.query.wholeArea = -1;
+        } else {
+          req.query.wholeArea = 0;
+        }
+
+        if (query.split("where").length) {
+          query += " and b.bezirk = " + req.query.wholeArea;
+        } else {
+          query += " where b.bezirk = " + req.query.wholeArea;
+        }
+
         let finalQuery = defaultSelection + query;
 
         finalQuery += " group by fo.fsd_id";
-
-        console.log(finalQuery);
 
         conn.query(finalQuery, function (err, rows, fields) {
           conn.release();

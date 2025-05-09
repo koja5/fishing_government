@@ -38,11 +38,13 @@ const verifyToken = (req, res, next) => {
       // res.clearCookie("token");
       // res.redirect('/');
       return res.status(401).send("Invalid Token");
+      // res.redirect("/auth/login");
     }
   } catch (err) {
     // res.clearCookie("token");
     // res.redirect('/');
     return res.status(401).send("Invalid Token");
+    // res.redirect("/auth/login");
   }
   return next();
 };

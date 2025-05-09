@@ -244,4 +244,14 @@ export class StorageService {
     }
     this.setLocalStorage(key, gridConfig);
   }
+
+  setWholeAreaForGrid(key: string, value: any) {
+    let gridConfig = this.getLocalStorage(key);
+    if (gridConfig) {
+      gridConfig["wholeArea"] = value;
+    } else {
+      gridConfig = { wholeArea: value };
+    }
+    this.setLocalStorage(key, gridConfig);
+  }
 }
